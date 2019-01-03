@@ -1,3 +1,8 @@
+"""
+pandas DataFrame scaler that scales all numeric values and returns a scaled DataFrame
+returned DataFrame includes the untouched non-numeric values
+"""
+
 import pandas as pd
 import numpy as np
 import random
