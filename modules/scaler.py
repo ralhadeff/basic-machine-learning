@@ -1,3 +1,7 @@
+"""
+A simple scaler for pandas dataframes. Saves the fitted scaling factors, then can scale or unscale dataframes as needed
+"""
+
 import pandas as pd
 import numpy as np
 import random
