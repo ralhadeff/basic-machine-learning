@@ -37,3 +37,6 @@ def scale(df,scaler='standard',skip_boolean='True',skip_row=[]):
                     if (min-max!=0):
                         new_df[i] = df[i].map(lambda x: (x-min)/(max-min))
     return new_df
+
+if (__name__ == '__main__'):
+    print("This module is not intended to run by iself")
