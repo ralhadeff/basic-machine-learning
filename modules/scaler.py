@@ -4,7 +4,6 @@ A simple scaler for pandas dataframes. Saves the fitted scaling factors, then ca
 
 import pandas as pd
 import numpy as np
-import random
 
 class Scaler(object):
     """
@@ -27,13 +26,15 @@ class Scaler(object):
         skip_row is a list of row names to skip
         """
         for i in df:
+            # add default factor
+            self.factors[i]=(0,0)
             if (i not in skip_row):
                 if (df.dtypes[i]==np.int64 or df.dtypes[i]==np.float64):
                     if (skip_boolean):
                         list = df[i].unique()
                         if (len(list)<3):
                             if (0 in list and 1 in list):
-                                self.factors[i]=(a,b)
+                                #self.factors[i]=(a,b)
                                 continue
                     # set factors based on method
                     if (scaler=='standard'):
@@ -58,6 +59,8 @@ class Scaler(object):
             a,b = self.factors[i]
             if (b!=0):
                 new_df[i] = df[i].map(lambda x: (x-a)/b)
+            else:
+                new_df[i] = df[i]
         return new_df
     
     def unscale(self,df):
@@ -72,6 +75,8 @@ class Scaler(object):
             a,b = self.factors[i]
             if (b!=0):
                 new_df[i] = df[i].map(lambda x: x*b+a)
+            else:
+                new_df[i] = df[i]
         return new_df        
 
 if (__name__ == '__main__'):
