@@ -20,13 +20,11 @@ class Linear_regressor(object):
         it uses the normal equation, batch gradient decent, or stochastic gradient decent to find the coeffcients
         it also automatically adds the first column x0 (all 1's) if it is missing
 
-        output is given as a 1d array with the intercept as x0 and the coefficients as elements 1 through n
-
         if using batch gradient descent, a learning rate and number of ephochs can be provided
            these have no effect for normal equation
         also, starting coefficients can be provided
         when doing gradient decent, learning rate will gradually decrease if diverging
-        if loss function improvement is smaller than tolance (in percentages) that learning rate will increase
+        if loss function improvement is smaller than tolance (in percentages) learning rate will increase
 
         if using stochastic gradient descent, same as batch, but with bins instead of the whole set
 
