@@ -8,7 +8,7 @@ Note - because it is simplistic, feature standartization (or normalization) is c
 import numpy as np
 import pandas as pd
 
-class Linear_regressor(object):
+class LinearRegressor(object):
 
     def __init__(self):
         self.coeff=None
