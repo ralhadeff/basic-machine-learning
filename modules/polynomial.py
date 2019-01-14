@@ -54,8 +54,9 @@ def add_polynimials(df,power=2,cross=2,skip_row=[]):
             new_columns = np.concatenate((new_columns,[name + "^" + str(i) for name in columns if name not in skip_row]))
     
     # add cross multiplications
-    #convert names to list
-    new_columns = list(new_columns)    
+    if (pandas):
+        #convert names to list
+        new_columns = list(new_columns)    
     # cross will be done pair-wise
     for colA in range(df.shape[1]):
         for colB in range(colA+1,df.shape[1]):
