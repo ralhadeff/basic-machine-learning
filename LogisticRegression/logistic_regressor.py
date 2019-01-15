@@ -82,9 +82,11 @@ class Logistic_regressor(object):
             # end of batch/mini-batch loop
         # end of epochs loop
 
-    def predict(self,X):
+    def predict(self,X, probability=False, threshold=0.5):
         """
         Predict and returns the values h for all samples provided
+        probability is whether the user wants output as probabilities or labels
+        threshold is the threshold for labeling '1', only applied if probability is set to False
         """
         # convert dataframe to ndarray if needed
         if (type(X) is pd.DataFrame):
@@ -95,7 +97,11 @@ class Logistic_regressor(object):
             n = X.shape[0]
             x0 = np.ones((n,1))
             X = np.hstack((x0,X))
-        return np.vectorize(sigmoid)(np.squeeze(np.asarray(np.matmul(X,self.coeff))))
+        prob = np.vectorize(sigmoid)(np.squeeze(np.asarray(np.matmul(X,self.coeff))))
+        if (probability):
+            return prob
+        else:
+            return np.vectorize(lambda x: 1 if x>=threshold else 0)(prob)
 
 if (__name__ == '__main__'):
     print("This module is not intended to run by iself")
