@@ -96,3 +96,6 @@ class Logistic_regressor(object):
             x0 = np.ones((n,1))
             X = np.hstack((x0,X))
         return np.vectorize(sigmoid)(np.squeeze(np.asarray(np.matmul(X,self.coeff))))
+
+if (__name__ == '__main__'):
+    print("This module is not intended to run by iself")
