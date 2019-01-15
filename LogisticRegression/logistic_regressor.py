@@ -9,7 +9,7 @@ import math
 def sigmoid(x):
     return 1 / (1 + math.exp(-x))
 
-class Logistic_regressor(object):
+class LogisticRegressor(object):
 
     def __init__(self):
         self.coeff=None
