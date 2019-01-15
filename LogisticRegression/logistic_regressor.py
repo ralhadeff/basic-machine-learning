@@ -95,4 +95,4 @@ class Logistic_regressor(object):
             n = X.shape[0]
             x0 = np.ones((n,1))
             X = np.hstack((x0,X))
-        return np.squeeze(np.asarray(np.matmul(X,self.coeff)))
+        return np.vectorize(sigmoid)(np.squeeze(np.asarray(np.matmul(X,self.coeff))))
