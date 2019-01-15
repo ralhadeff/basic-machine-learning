@@ -28,7 +28,7 @@ def split_dataset(X,y,test_ratio=0.33, validation_ratio=0,seed=42):
     size = X.shape[0]
     if (not (0<train_ratio<1)):
         raise ValueError("Training set size out of bounds")
-    train = random.sample(range(size),int(size*train_ratio))
+    train = random.sample(range(size),round(size*train_ratio))
     train = np.sort(train)
     # opposite indices
     test = np.ones(len(X),np.bool)
@@ -40,6 +40,7 @@ def split_dataset(X,y,test_ratio=0.33, validation_ratio=0,seed=42):
     y_test = y[test]
     if (validation_ratio!=0):
         # further split test into test and validation
+        # this second seed is necessary, otherwise the next call of split_dataset will use the seed of 42 again
         next_seed = random.randint(0,1000)
         new_ratio = test_ratio/(test_ratio+validation_ratio)
         X_val,y_val, X_test, y_test = split_dataset(X_test,y_test,test_ratio=new_ratio,seed=next_seed)
