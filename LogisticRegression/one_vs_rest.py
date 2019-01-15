@@ -27,7 +27,7 @@ class OvR(object):
         # generate regressors and train each on a modified training set
         for key in self.unique:
             y_current = np.vectorize(lambda x: 1 if x==key else 0)(y)
-            self.regressors[key] = logistic_regressor.Logistic_regressor()
+            self.regressors[key] = logistic_regressor.LogisticRegressor()
             # if requested, give each regressor its own current coefficients
             if (starting_coeff):
                 init = self.regressors[key].coeff
