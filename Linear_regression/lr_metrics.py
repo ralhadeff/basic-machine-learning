@@ -2,6 +2,8 @@
 Linear regression metrics tools
 """
 
+import numpy as np
+
 def mae(real_y,predictions):
     """
     Mean absolute error
