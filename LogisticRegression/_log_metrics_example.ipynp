@@ -1,0 +1,345 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Logistic regression metrics"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import math\n",
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "from log_metrics import *"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "** Datasets **"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "size =1000\n",
+    "\n",
+    "coefficients = [0,-1.4,2.1,-3,10.4,-8]\n",
+    "x = np.ones((size,len(coefficients)))\n",
+    "for i in range(1,len(coefficients)):\n",
+    "    x[:,i]=np.random.rand(size)\n",
+    "y = np.vectorize(lambda x: round(1/(1+math.exp(-x))))((x*coefficients).sum(axis=1) + np.random.normal(size=size))\n",
+    "\n",
+    "t_x = np.ones((size,len(coefficients)))\n",
+    "for i in range(1,len(coefficients)):\n",
+    "    t_x[:,i]=np.random.rand(size)\n",
+    "t_y = np.vectorize(lambda x: round(1/(1+math.exp(-x))))((t_x*coefficients).sum(axis=1) + np.random.normal(size=size))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "** Regression **"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from logistic_regressor import LogisticRegressor\n",
+    "log = LogisticRegressor()\n",
+    "log.fit(x,y,epochs=100,bin_size=1)\n",
+    "# predictions\n",
+    "pred = log.predict(t_x)\n",
+    "prob = log.predict(t_x,probability=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Metrics"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "** Total accuracy **"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.916"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "accuracy(t_y,pred)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "** Cross entropy loss **"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.6336797747997936"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "cross_entropy_loss(t_y,prob).mean()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Receiver operating characteristic (ROC) curve**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\neEPYhjGBStEAAAAASUVORK5CYII=\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "fpr,tpr,area = roc(t_y,prob,area=True)\n",
+    "plt.step(fpr,tpr)\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Area under graph"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0.9834726451370245\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(area)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Confusion matrix**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Matrix form:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[490,  19],\n",
+       "       [ 65, 426]])"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "confusion_matrix(t_y,pred)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Formatted printout"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Prediction >\t0\t1\t\n",
+      "V Label V\n",
+      "\n",
+      "0\t\t490\t19\n",
+      "1\t\t65\t426\n"
+     ]
+    }
+   ],
+   "source": [
+    "confusion_matrix(t_y,pred,show=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "** Classification report **"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "matrix form"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[   0.  ,    0.88,    0.96,    0.92,  509.  ],\n",
+       "       [   1.  ,    0.96,    0.87,    0.91,  491.  ],\n",
+       "       [   0.  ,    0.92,    0.92,    0.92, 1000.  ]])"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "np.set_printoptions(suppress=True)\n",
+    "classification_report(t_y,pred)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Formatted printout"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\tprecisn\trecall\tf1-sc\tsupport\n",
+      "\n",
+      "\n",
+      "0 \t 0.883 \t 0.963 \t 0.921 \t 509\n",
+      "1 \t 0.957 \t 0.868 \t 0.91 \t 491\n",
+      "\n",
+      "\n",
+      "w-ave\t 0.919 \t 0.916 \t 0.916 \t 1000\n"
+     ]
+    }
+   ],
+   "source": [
+    "classification_report(t_y,pred,3,True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Note that the decimal precision can be specified (default is 2)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
