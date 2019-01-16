@@ -2,6 +2,8 @@
 Logistic regression metrics tools
 """
 
+import numpy as np
+
 def accuracy(real_y,predictions):
     """
     Total accuracy of classification (correct labels)
