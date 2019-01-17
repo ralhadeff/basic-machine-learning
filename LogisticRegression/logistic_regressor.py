@@ -19,7 +19,7 @@ class LogisticRegressor(object):
     def __init__(self):
         self.coeff=None
     
-    def fit(self,X,y,add_x0=True,method='stochastic',learning_rate=0.0001,epochs=100,starting_coeff=None,bin_size=10):
+    def fit(self,X,y,add_x0=True,method='stochastic',learning_rate=0.001,epochs=100,starting_coeff=None,bin_size=1):
         """
         This is a simple logistic regressor
         it can use batch gradient decent, or stochastic gradient decent to find the coeffcients
