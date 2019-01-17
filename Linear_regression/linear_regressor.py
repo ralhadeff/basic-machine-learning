@@ -7,6 +7,11 @@ Note - because it is simplistic, feature standartization (or normalization) is c
 
 import numpy as np
 import pandas as pd
+# try to import metrics module
+try:
+    import lr_metrics
+except:
+    pass
 
 class LinearRegressor(object):
 
@@ -120,5 +125,18 @@ class LinearRegressor(object):
             X = np.hstack((x0,X))
         return np.squeeze(np.asarray(np.matmul(X,self.coeff)))
 
+    def score(self,X,y):
+        """
+        Return the score on the given test set
+        """
+        # try to use metrics' MSE
+        try:
+            # the reason this is better than the built-in function is in case I ever want to modify lr_metrics module
+            return lr_metrics.mse(y,self.predict(X))
+        except:
+            # default built-in metrics
+            pred = self.predict(X)
+            return ((y-pred)**2).mean()
+    
 if (__name__ == '__main__'):
     print("This module is not intended to run by iself")
