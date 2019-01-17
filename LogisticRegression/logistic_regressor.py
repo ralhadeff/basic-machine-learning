@@ -4,10 +4,15 @@ Simple logistic regressor that uses batch/mini-batch/stochastic gradient descent
 
 import pandas as pd
 import numpy as np
-import math
+# try to import metrics module
+try:
+    import lr_metrics
+except:
+    pass
+
 
 def sigmoid(x):
-    return 1 / (1 + math.exp(-x))
+    return 1 / (1 + np.exp(-x))
 
 class LogisticRegressor(object):
 
@@ -102,6 +107,19 @@ class LogisticRegressor(object):
             return prob
         else:
             return np.vectorize(lambda x: 1 if x>=threshold else 0)(prob)
+
+    def score(self,X,y):
+        """
+        Return the score on the given test set
+        """
+        # try to use metrics' accuracy
+        try:
+            # the reason this is better than the built-in function is in case I ever want to modify lr_metrics module
+            return log_metrics.accuracy(y,self.predict(X))
+        except:
+            # default built-in metrics
+            pred = self.predict(X)
+            return (y==pred).mean()
 
 if (__name__ == '__main__'):
     print("This module is not intended to run by iself")
