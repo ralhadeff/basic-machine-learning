@@ -1,18 +1,18 @@
 """
-Implementation of Kmeans clustering, including kmeans++ centroid initialization
+Implementation of k-means clustering, including kmeans++ centroid initialization
 """
 
 import numpy as np
 
 class KMeans():
     """
-    Implementation of K-means clustering
+    Implementation of k-means clustering
     Will find k clusters in the data based on Euclidean distance
     """
     
     def __init__(self, init='kmeans++'):
         """
-        Construct a K-Means clusterizer, using initialization function as specified
+        Construct a k-means clusterizer, using initialization function as specified
         kmeans++ is the default, otherwise 'random' can be specified
         """
         self.init = init
