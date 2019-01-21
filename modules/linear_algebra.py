@@ -1,12 +1,10 @@
 """
 This module is a simple and inefficient implementation of the basic linear algebra required for machine learning tools
-
 It is designed for educational purposes only, and is by no means intended to be actually used (numpy is much better if you actually need to use linear algebra)
-
 The code was written by Raphael Alhadeff, Jan 2019, as part of my self-training in data science skills
-
 For simplicity, I will use lists for vectors, and then lists of vectors for matrices
 
+Note: more linear algebra tools specific for PCA are present in the pca.py file in the PCA folder
 """
 
 import math
