@@ -10,12 +10,10 @@ class BasicPlayer():
     This class is a scaffold on which the other algorithms will be constructed upon (using inheritence)
     """
     
-    def __init__(self):
-        # total accumulated profit (or loss)
-        self.profit = 0
-        
     def start(self,bandits):
         """Effectively initialize the player"""
+        # reset total accumulated profit (or loss)
+        self.profit = 0
         # number of bandits
         n = len(bandits)
         # array of estimated means for bandits
