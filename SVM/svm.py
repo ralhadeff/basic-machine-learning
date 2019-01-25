@@ -53,8 +53,10 @@ class SVM():
                     # for mismatch, update weights
                     w-=learning_rate*(w/epoch-C*x*y[i])
                 else:
-                    # otherwise, only regularize
-                    w-=learning_rate*w/epoch
+                    # otherwise, do only regulaization
+                    # note, regularization doesn't affect the line in itself at all
+                    # the effect is by making the weights smaller, and the effect of updates on mismatches bigger
+                    w*=(1-learning_rate/epoch)
                 i+=1
         
         # save weights
