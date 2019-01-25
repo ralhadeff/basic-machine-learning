@@ -1,5 +1,5 @@
 """
-Support vector machine implmentation
+Support vector machine implmentation (Pegasos version)
 """
 # currently using only the 'linear kernel' and only binary classification
 
