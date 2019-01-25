@@ -10,7 +10,10 @@ except:
     pass
 
 class SVM():
-        
+    
+    def __init__(self):
+        self.labels=None
+ 
     def fit(self,X,y,learning_rate=1,epochs=1000,C=1,add_x0=True):
         """
         Fit the SVM using data X and labels y (1,-1)
@@ -21,7 +24,7 @@ class SVM():
         """
         # read labels, change y to -1,1 and save labels for predictions later
         labels = np.unique(y)
-        if (not np.array_equal(labels,[-1,1])):
+        if (labels[0]!=-1 or labels[1]!=1):
             if (len(labels)!=2):
                 raise ValueError('Error in label array (too many or too few unique labels)')
             else:
@@ -32,8 +35,8 @@ class SVM():
         
         # add constant to X if necessary (first column)
         if (add_x0) and (X[0,0]!=1 or len(np.unique(X[:,0]))>1):
-            x = np.concatenate((np.ones((len(X),1)),X),1)
-     
+            X = np.concatenate((np.ones((len(X),1)),X),1)
+
         # initialize weights vector
         w = np.zeros(X.shape[1])
         
@@ -62,15 +65,15 @@ class SVM():
         Predict the labels on a given dataset
         """
         # add 1 to X if needed (only check if one column is missing, and assume that it is the constants)
-        if (X.shape[1]==self.coeff.shape[0]-1):
-            x = np.concatenate((np.ones((len(X),1)),X),1)
+        if (X.shape[1]==len(self.weights)-1):
+            X = np.concatenate((np.ones((len(X),1)),X),1)
         # predict using -1 and 1 as output
-        pred = np.dot(x,w)
+        pred = np.dot(X,self.weights)
         pred[pred>=0]=1
         pred[pred<0]=-1
         # convert predictions to the labels
         if (self.labels is not None):
-            pred = np.vectorize({-1:labels[0],1:labels[1]}.get)(pred)
+            pred = np.vectorize({-1:self.labels[0],1:self.labels[1]}.get)(pred)
         return pred
         
     def score(self,X,y):
