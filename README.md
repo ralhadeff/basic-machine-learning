@@ -1,7 +1,7 @@
 # basic-machine-learning
-A python implementation for machine learning tools
+**A python implementation for machine learning tools**
 
-Written by Raphael Alhadeff, started Jan 2019
+*Written by Raphael Alhadeff, started Jan 2019*
 
 This repository will include all my machine learning implementations in python. The purpose of this implementation is for my own training, and it is not particularly efficient.
 
