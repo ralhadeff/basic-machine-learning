@@ -9,7 +9,8 @@ Note: although many sections in the code could be improved for efficiency (e.g. 
 
 For the first few estimators (Linear and Logistic) I wrote a full support to pandas DataFrames and Series. I did not always implement this because there was no more new code to write and learn from by continuing this support. Generally speaking, using DF.values or Series.values should work for all numerical data.
 
-Somewhat general tools that are in specific folders (other folder names are self-explanatory:
+
+Somewhat general tools that are in specific folders (other folder names are self-explanatory):
  * Regularization is in LinearRegression (and has not be implemented in the LogisticRegression)
  * One-vs-Rest classification scheme is in LogisticRegression
  * One-vs-one classification scheme is in SVM
