@@ -1,5 +1,5 @@
 # basic-machine-learning
-This is an implementation for machine learning tools using Python
+A python implementation for machine learning tools
 
 Written by Raphael Alhadeff, started Jan 2019
 
