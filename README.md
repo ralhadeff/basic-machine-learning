@@ -12,6 +12,6 @@ For the first few estimators (Linear and Logistic) I wrote a full support to pan
 
 Somewhat general tools that are in specific folders (other folder names are self-explanatory):
  * Regularization is in LinearRegression (and has not be implemented in the LogisticRegression)
- * One-vs-Rest classification scheme is in LogisticRegression
- * One-vs-one classification scheme is in SVM
+ * One-vs-rest classification scheme is in LogisticRegression, ovr
+ * One-vs-one classification scheme is in SVM, ovo
  * `modules` contains linear algebra, scaling tools, polynomial features generator, and a data splitting tool
