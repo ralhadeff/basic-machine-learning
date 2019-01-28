@@ -7,7 +7,7 @@ import math
 
 import svm
 
-class svm_rbf():
+class SvmRbf():
 
     def fit(self,X,y,gamma=1,landmarks=None,learning_rate=1,epochs=1000,C=1):
         """
