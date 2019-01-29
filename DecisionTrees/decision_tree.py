@@ -10,7 +10,7 @@ class DecisionTree():
     A decision tress classifier
     """
     
-    def __init__(self,max_depth):
+    def __init__(self,max_depth=15):
         """Maximum depth to avoid over-recursion"""
         self.max_depth = max_depth
 
