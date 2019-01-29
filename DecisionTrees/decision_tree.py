@@ -44,7 +44,13 @@ class DecisionTree():
         for i in range(len(self.labels)):
             predictions[y==i] = self.labels[i]        
         return predictions
-
+    
+    def score(self,X,y):
+        """Predict and give a score for the current data and true labels"""
+        # default is total accuracy
+        pred = self.predict(X)
+        return (y==pred).mean()
+    
 class Branch():
     """
     A branch object for the decision tree - with left and right branches, a splitting criterion, and labels of its own
