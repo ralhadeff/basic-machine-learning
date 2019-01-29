@@ -42,9 +42,12 @@ class RandomForest():
         # generate n trees and fit them
         self.trees = []
         for i in range(self.n_trees):
+            # generate a sub-sample (with returns) for the tree
             mask = np.random.choice(np.arange(len(X)),self.n_samples,replace=True)
+            # fit tree
             tree = decision_tree.DecisionTree(max_depth,max_features=self.n_features)
             tree.fit(X[mask],y[mask])
+            # add to ensemble
             self.trees.append(tree)
 
     def predict(self,X):
@@ -57,7 +60,6 @@ class RandomForest():
         for tree in self.trees:
             predictions[:,i] = tree.predict(X)
             i+=1
-        # count votes and retun winners
         winners = predictions[:,0]
         for i in range (len(predictions)):
             winners[i] = Counter(predictions[i]).most_common(1)[0][0]
