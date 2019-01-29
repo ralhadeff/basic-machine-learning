@@ -10,9 +10,10 @@ class DecisionTree():
     A decision tress classifier
     """
     
-    def __init__(self,max_depth=15):
+    def __init__(self,max_depth=15,max_features='all'):
         """Maximum depth to avoid over-recursion"""
         self.max_depth = max_depth
+        self.max_features = max_features
 
     def fit(self,X,y):
         """Find the best splits recursively until the limit, or a prefect classification is reached"""
@@ -23,9 +24,13 @@ class DecisionTree():
         for i in range(len(self.labels)):
             new_y[y==self.labels[i]] = i
         y = new_y
+        if (self.max_features=='all' or self.max_features>=X.shape[1]):
+            skip = []
+        else:
+            skip = np.random.choice(np.arange(X.shape[1]),X.shape[1]-self.max_features)
         # first branch
         self.head = Branch(self.max_depth)
-        self.head.split(X,y)
+        self.head.split(X,y,skip)
         
     def predict(self,X):
         """Predict the labels of give data"""
@@ -62,39 +67,45 @@ class Branch():
         self.right = None
         self.depth = depth
     
-    def split(self,X,y):
+    def split(self,X,y,skip=[]):
         """
         Splits the data and generates new branches under current branch as necessary
         """
         # find best split (gini score is not required)
-        self.criterion = find_best_split(X,y)[:2]
-        # generate left branch data
-        Xle = X[X[:,self.criterion[0]]<=self.criterion[1]]
-        yle = y[X[:,self.criterion[0]]<=self.criterion[1]]
-        # generate right branch data
-        Xgt = X[X[:,self.criterion[0]]>self.criterion[1]]
-        ygt = y[X[:,self.criterion[0]]>self.criterion[1]]
+        self.criterion = find_best_split(X,y,skip=skip)[:2]
+        if (self.criterion[0] == -1):
+            # no split was found, this node should act as if it is null
+            # it will return the value of y unsplit (same as parent branch, if this node hadn't been created
+            self.yle = Counter(y).most_common(1)[0][0]
+            self.ygt = self.yle
+        else:
+            # generate left branch data
+            Xle = X[X[:,self.criterion[0]]<=self.criterion[1]]
+            yle = y[X[:,self.criterion[0]]<=self.criterion[1]]
+            # generate right branch data
+            Xgt = X[X[:,self.criterion[0]]>self.criterion[1]]
+            ygt = y[X[:,self.criterion[0]]>self.criterion[1]]
         
-        # pass data to new branches
-        # check if left branch needs more splitting
-        if (gini(yle)>0):
-            # if max_depth has been reach, only proceed it this is a terminal split
-            if (self.depth>0 or find_best_split(Xle,yle)[2]==0):
-                self.left = Branch(self.depth-1)
-                self.left.split(Xle,yle)
-        # same with right
-        if (gini(ygt)>0):
-            if (self.depth>0 or find_best_split(Xgt,ygt)[2]==0):
-                self.right = Branch(self.depth-1)
-                self.right.split(Xgt,ygt)
+            # pass data to new branches
+            # check if left branch needs more splitting
+            if (gini(yle)>0):
+                # if max_depth has been reach, only proceed it this is a terminal split
+                if (self.depth>0 or find_best_split(Xle,yle,skip=skip)[2]==0):
+                    self.left = Branch(self.depth-1)
+                    self.left.split(Xle,yle,skip)
+            # same with right
+            if (gini(ygt)>0):
+                if (self.depth>0 or find_best_split(Xgt,ygt,skip=skip)[2]==0):
+                    self.right = Branch(self.depth-1)
+                    self.right.split(Xgt,ygt,skip)
         
-        # save label information for predictions later
-        if (self.left is None):
-            if (len(yle)>0):
-                self.yle = Counter(yle).most_common(1)[0][0]
-        if (self.right is None):
-            if (len(ygt)>0):
-                self.ygt = Counter(ygt).most_common(1)[0][0]
+            # save label information for predictions later
+            if (self.left is None):
+                if (len(yle)>0):
+                    self.yle = Counter(yle).most_common(1)[0][0]
+            if (self.right is None):
+                if (len(ygt)>0):
+                    self.ygt = Counter(ygt).most_common(1)[0][0]
     
     def get_label(self,x):
         """Make a prediction, recursively looking for the correct leaf"""
@@ -118,24 +129,26 @@ def gini(y):
     uniques,counts = np.unique(y,return_counts=True)
     return 1-((counts/len(y))**2).sum()
 
-def find_best_split(X,y,min_group_size=2):
+def find_best_split(X,y,min_group_size=2,skip=[]):
     """
     Finds the best split in X in terms of lowest gini index in y after the split
     """
     # best (column, <=value, gini)
     # starting values
-    best = (0,0,1)
+    best = (-1,0,10)
     n_total = len(X)
     for c in range(X.shape[1]):
         for x in X[:,c]:
-            # try a split
-            mask = X[:,c]<=x
-            count = mask.sum()
-            # weighted gini score
-            g = gini(y[mask])*(count/n_total) + gini(y[mask==False])*((n_total-count)/n_total)
-            # make a split only if the smallest group is at least min_group_size, except for score of 0.0
-            if (g==0 or (g<best[2] and len(y[X[:,c]<=x])>=min_group_size and len(y[X[:,c]>x])>=min_group_size)):
-                best = (c,x,g)
+            # skip rows as requested (for random forest)
+            if (c not in skip):
+                # try a split
+                mask = X[:,c]<=x
+                count = mask.sum()
+                # weighted gini score
+                g = gini(y[mask])*(count/n_total) + gini(y[mask==False])*((n_total-count)/n_total)
+                # make a split only if the smallest group is at least min_group_size, except for score of 0.0
+                if (g==0 or (g<best[2] and len(y[X[:,c]<=x])>=min_group_size and len(y[X[:,c]>x])>=min_group_size)):
+                    best = (c,x,g)
     return best
 
 if (__name__ == '__main__'):
