@@ -1,4 +1,4 @@
-# basic-machine-learning
+# machine-learning-tools
 **A python implementation for machine learning tools**
 
 *Written by Raphael Alhadeff, started Jan 2019*
