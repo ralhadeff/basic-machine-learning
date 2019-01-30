@@ -15,3 +15,4 @@ General tools that are in specific folders (other folder names are self-explanat
  * One-vs-rest classification scheme is in LogisticRegression, ovr
  * One-vs-one classification scheme is in SVM, ovo
  * `modules` contains linear algebra, scaling tools, a polynomial features generator, and a data splitting tool
+ * Validation curve is in DecisionTrees
