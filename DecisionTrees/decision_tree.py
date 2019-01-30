@@ -40,9 +40,7 @@ class DecisionTree():
         i = 0
         for x in X:
             # predict recursively for each point
-            c = self.head.get_label(x)
-            # mark label
-            y[i] = c
+            y[i] = self.head.get_label(x)
             i+=1
         # convert numerical labels back to original labels
         predictions = np.zeros(len(y),dtype=self.labels.dtype)
