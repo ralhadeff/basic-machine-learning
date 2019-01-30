@@ -41,7 +41,7 @@ class DecisionTree():
         for x in X:
             # predict recursively for each point
             c = self.head.get_label(x)
-            # mar label
+            # mark label
             y[i] = c
             i+=1
         # convert numerical labels back to original labels
