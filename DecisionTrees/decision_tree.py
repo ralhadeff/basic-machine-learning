@@ -86,16 +86,20 @@ class Branch():
         
             # pass data to new branches
             # check if left branch needs more splitting
-            if (gini(yle)>0):
+            if (gini(yle)>0 and len(yle)>0):
                 # if max_depth has been reach, only proceed it this is a terminal split
                 if (self.depth>0 or find_best_split(Xle,yle,skip=skip)[2]==0):
                     self.left = Branch(self.depth-1)
                     self.left.split(Xle,yle,skip)
+            else:
+                self.yle = Counter(y).most_common(1)[0][0]
             # same with right
-            if (gini(ygt)>0):
+            if (gini(ygt)>0 and len(ygt)>0):
                 if (self.depth>0 or find_best_split(Xgt,ygt,skip=skip)[2]==0):
                     self.right = Branch(self.depth-1)
                     self.right.split(Xgt,ygt,skip)
+            else:
+                self.ygt = Counter(y).most_common(1)[0][0]
         
             # save label information for predictions later
             if (self.left is None):
