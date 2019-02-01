@@ -47,11 +47,13 @@ class AnomalyDetector():
             n = len(self.sigma)
             det = np.linalg.det(self.sigma)
             x_mu = X-self.mu
-            # initialize array
-            p = np.zeros(len(X))
-            for i in range(len(X)):
-                # calculate p for each point
-                p[i] = 1/((2*np.pi)**(n//2)*det) * np.exp(-(x_mu[i].T @ np.linalg.inv(self.sigma) @ x_mu[i])/2)
+            if (np.ndim(X)>1):
+                # initialize array
+                p = np.zeros(len(X))
+                for i in range(len(X)):
+                    p[i] = 1/((2*np.pi)**(n//2)*det) * np.exp(-(x_mu[i].T @ np.linalg.inv(self.sigma) @ x_mu[i])/2) 
+            else:
+                p = 1/((2*np.pi)**(n//2)*det) * np.exp(-(x_mu[:,None].T @ np.linalg.inv(self.sigma) @ x_mu[:,None])/2) 
             return p
         
     def suggest_epsilon(self,x,variate='univariate'):
