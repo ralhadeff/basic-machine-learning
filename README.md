@@ -12,7 +12,7 @@ For the first few estimators (Linear and Logistic) I wrote a full support to pan
 
 General tools that are in specific folders (other folder names are self-explanatory):
  * Regularization is in `LinearRegression` (and has not be implemented in the `LogisticRegression`)
- * One-vs-rest classification scheme is in `LogisticRegression`, `ovr.py`
- * One-vs-one classification scheme is in SVM, ovo
+ * One-vs-rest classification scheme is in `LogisticRegression`
+ * One-vs-one classification scheme is in `SVM`
  * `modules` contains linear algebra, scaling tools, a polynomial features generator, and a data splitting tool
- * Validation curve is in DecisionTrees
+ * Validation curve is in `DecisionTrees`
