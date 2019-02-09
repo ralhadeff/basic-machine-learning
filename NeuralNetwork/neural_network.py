@@ -7,7 +7,7 @@ import numpy as np
 
 class Layer():
     
-    def __init__(self,no_of_neurons,previous_layer='none',activation=None,name='unnamed'):
+    def __init__(self,no_of_neurons,previous_layer=None,activation='none',name='unnamed'):
         '''
         An ANN layer
             User specifies the number of neurons, the previous layer that sends input into this layer
