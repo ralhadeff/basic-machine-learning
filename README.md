@@ -16,4 +16,4 @@ General tools that are in specific folders (other folder names are self-explanat
  * _One-vs-one_ classification scheme is in `SVM`
  * `modules` contains _linear algebra_, _scaling_ tools, a _polynomial features generator_, and a _data splitting_ tool
  * _Validation curve_ is in `DecisionTrees`
- * `OneArmedBandit` contains _ε-greedy_, _decaying ε-greedy_, _optimsitic initial value_, _upper confidence bound_, and _Thompson sampling_ algorithms
+ * `MultiArmedBandit` contains _ε-greedy_, _decaying ε-greedy_, _optimsitic initial value_, _upper confidence bound_, and _Thompson sampling_ algorithms
