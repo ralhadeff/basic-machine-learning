@@ -2,7 +2,7 @@
 
 Work in progress
 
-This folder contains the neural network module (`neural_network.py`) which enables the building and stacking of neuron layers (`class Layer`) and a module to constuct-, train-, and predict with-ANNs (`network.py`).  
+This folder contains the neural network module (`neural_network.py`) which enables the building and stacking of neuron layers (`class Layer`) and a module to constuct-, train-, and predict with-ANNs (`network.ipynb`).  
 
 The network can do binary classification and regression. There are two Jupyter Notebook `.ipynb` files for regression and classification examples.  
 
