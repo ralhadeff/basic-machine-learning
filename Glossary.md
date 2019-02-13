@@ -9,6 +9,7 @@ Note: these descriptions are written in a way that helps me understand and remem
 | Term  | Brief description | Link |
 | --- | --- | --- |
 | Adversarial learning | A technique used, mostly for malicious motivations, to fool machine learning tools (*e.g.* using special character to fool simple spam classifiers. | [rifle-turtle](https://www.theverge.com/2017/11/2/16597276/google-ai-image-attacks-adversarial-turtle-rifle-3d-printed) |
+| Autoencoder | An ANN that attempts to encode data to a lower dimension, then reconstruct it as faithfully as possible. In practice, this is an ANN that has fewer neurons in the hidden layers than the input, and is trained by comparing the output to the input | - |
 | Container technology | An application bundled together with all its dependencies, libraries, binaries, and configuration files needed to run it - to avoid problems when migrating between different computers (or similar). | - |
 | DNA storage | A method for storing digital data encoded into DNA (using the standard nucleotides). The achieved compression is enormous, but reading from the DNA is a slow process | - |
 | Document clustering | Clustering textual documents together in a way that makes sense to humans, *e.g.* by subject or type of document. | - |
