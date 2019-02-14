@@ -8,6 +8,7 @@ Note: these descriptions are written in a way that helps me understand and remem
 
 | Term  | Brief description | Link |
 | --- | --- | --- |
+| AdaBoost | An ensemble learning method where several weak learners are trained sequentially, and the samples are weighted based on whether they were correctly classified or not, in the previous iteration | - |
 | AdaGrad | An algorithm for SGD where the learning rate is adapted based on the frequency of features. It is a good algorithm for sparse data (e.g. bag of words). Related: RMSprop. | [link](http://ruder.io/optimizing-gradient-descent/index.html#adagrad) |
 | Adversarial learning | A technique used, mostly for malicious motivations, to fool machine learning tools (*e.g.* using special character to fool simple spam classifiers. | [rifle-turtle](https://www.theverge.com/2017/11/2/16597276/google-ai-image-attacks-adversarial-turtle-rifle-3d-printed) |
 | Autoencoder | An ANN that attempts to encode data to a lower dimension, then reconstruct it as faithfully as possible. In practice, this is an ANN that has fewer neurons in the hidden layers than the input, and is trained by comparing the output to the input | - |
