@@ -90,10 +90,12 @@ class Layer():
             # last layer's error and delta are the derivative of the loss function
             if (self.func == sigmoid):
                 # classification, using binary cross entropy
+                # derivative of the loss function
                 self.error = -( (y/self.a) - ((1-y)/(1-self.a)) )
                 self.delta = self.error * self.deriv(self.z)
             else:
-                # regression, using MSE 
+                # regression, using MSE
+                # derivative of loss function
                 self.error = self.a - y
                 self.delta = self.error * self.deriv(self.z)
         else:
