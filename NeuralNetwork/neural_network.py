@@ -51,9 +51,13 @@ class Layer():
             # set ReLU and the derivative
             self.func = ReLU
             self.deriv = dReLU
-        if (func=='sigmoid'):
+        elif (func=='sigmoid'):
             self.func = sigmoid
             self.deriv = dSigmoid
+        elif (func=='softmax'):
+            self.func = softmax
+            # note that for softmax this is not actually used
+            self.deriv = dSoftmax            
         elif (func=='none'):
             self.func = lambda x:x
             self.deriv = lambda x:1
@@ -90,12 +94,13 @@ class Layer():
             # last layer's error and delta are the derivative of the loss function
             if (self.func == sigmoid):
                 # classification, using binary cross entropy
-                # derivative of the loss function
                 self.error = -( (y/self.a) - ((1-y)/(1-self.a)) )
                 self.delta = self.error * self.deriv(self.z)
+            elif (self.func == softmax):
+                # multiclass classification, with cross entropy and derivative of softmax included
+                self.delta = self.a -y
             else:
-                # regression, using MSE
-                # derivative of loss function
+                # regression, using MSE 
                 self.error = self.a - y
                 self.delta = self.error * self.deriv(self.z)
         else:
@@ -133,5 +138,17 @@ def dSigmoid(x):
     s = sigmoid(x)
     return s*(1-s)
 
+def softmax(x):
+    '''Softmax function'''
+    e = np.exp(x)
+    if (len(x.shape) == 1):
+        return e/e.sum()
+    else:
+        return e/e.sum(axis=1)[:,None]
+
+def dSoftmax(x):
+    '''Derivative of softmax is integrated into the loss function derivative for simplicity'''
+    pass
+    
 if (__name__ == '__main__'):
     print("This module is not intended to run by iself")
