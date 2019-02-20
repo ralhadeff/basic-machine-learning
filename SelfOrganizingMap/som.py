@@ -55,8 +55,13 @@ class SOM():
                             nodes[(i,j)] = updated_weights(nodes[(i,j)],sample,influence*l)
         self.nodes = nodes
     
-    def get_map(self):
-        '''Currently using all features'''
+    def get_map(self,coordinate=None):
+        '''
+        Generate a distance map
+            by default, using all coordinates
+            user can specify a specific coordinate index 
+                to generate a map for that coordinate alone
+        '''
         x,y,_ = self.nodes.shape
         distance_map = np.zeros((x,y))
         # accumulate distances
@@ -65,7 +70,15 @@ class SOM():
                 # calculate the distance of all new pairs and accumulate in the map
                 # distances are calculated once and added to both nodes on the map
                 for a,b,c,d in get_new_pairs(i,j,x,y):
-                    dist = get_inter_node_distance(self.nodes[a,b],self.nodes[c,d])
+                    # neighboring nodes
+                    n_1 = self.nodes[a,b]
+                    n_2 = self.nodes[c,d]
+                    # calculate distance
+                    if (coordinate is None):
+                        dist = math.sqrt( ((n_1-n_2)**2).sum() )
+                    else:
+                        dist = abs(n_1[coordinate] - n_2[coordinate])
+                    # update on both nodes
                     distance_map[a,b]+=dist
                     distance_map[c,d]+=dist
         # divide by number of neighbors (using adjacents including diagonals)
@@ -99,11 +112,7 @@ def get_new_pairs(i,j,x,y):
         # bottom
         pairs.append((i,j,i,j+1))
     return pairs
-                             
-def get_inter_node_distance(i,j):
-    '''calculate the distance (in grid space) between two nodes'''
-    return math.sqrt( ((i-j)**2).sum() )
-        
+                                     
 def find_clostest(nodes,sample):
     '''find the closest node to this sample'''
     min_dist = float('inf')
