@@ -57,8 +57,53 @@ class SOM():
     
     def get_map(self):
         '''Currently using all features'''
-        pass # under construction
-    
+        x,y,_ = self.nodes.shape
+        distance_map = np.zeros((x,y))
+        # accumulate distances
+        for i in range(x):
+            for j in range(y):
+                # calculate the distance of all new pairs and accumulate in the map
+                # distances are calculated once and added to both nodes on the map
+                for a,b,c,d in get_new_pairs(i,j,x,y):
+                    dist = get_inter_node_distance(self.nodes[a,b],self.nodes[c,d])
+                    distance_map[a,b]+=dist
+                    distance_map[c,d]+=dist
+        # divide by number of neighbors (using adjacents including diagonals)
+        # corners have 3 neighbors, edges have 5 and all others have 8
+        distance_map/=8
+        distance_map[[0,-1],:]*=1.6
+        distance_map[:,[0,-1]]*=1.6
+        distance_map[[0,-1],[0,-1]]/=0.96
+        distance_map[[-1,0],[0,-1]]/=0.96
+        # return averaged distance map
+        return distance_map
+        
+def get_new_pairs(i,j,x,y):
+    '''
+    Return a list of tuples of all the pairs that
+        have not been already calculated for the current node
+        i,j - current indices
+        x,y - dimention of grid
+    '''
+    pairs = []
+    if (i<x-1):
+        if (j>0):
+            # top right
+            pairs.append((i,j,i+1,j-1))
+        # front
+        pairs.append((i,j,i+1,j))
+        if (j<y-1):
+            # bottom right
+            pairs.append((i,j,i+1,j+1))
+    if (j<y-1):
+        # bottom
+        pairs.append((i,j,i,j+1))
+    return pairs
+                             
+def get_inter_node_distance(i,j):
+    '''calculate the distance (in grid space) between two nodes'''
+    return math.sqrt( ((i-j)**2).sum() )
+        
 def find_clostest(nodes,sample):
     '''find the closest node to this sample'''
     min_dist = float('inf')
