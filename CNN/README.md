@@ -1,3 +1,3 @@
 Work in progress
 
-Something with the kernels and the back propagation needs to be sorted
+Something with the kernels and the back propagation needs to be fixed
