@@ -99,7 +99,6 @@ def sigmoid(X):
 def bernoulli(X):
     '''Returns 0 or 1 using a uniform distribution, with cutoffs provided in X'''
     draws = np.random.random(X.shape)
-    np.random.random_sample()
     return (X > draws).astype(int)
 
 if (__name__ == '__main__'):
