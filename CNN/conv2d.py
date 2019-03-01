@@ -58,22 +58,21 @@ class Conv2D(neural_network.Layer):
             return a
         
     def back_propagate(self,y=None,learning_rate=0.0001):
-        '''Propagate errors backward into this layer'''        
+        '''Propagate errors backward into this layer''' 
         if (self.next_layer is None):
-            # if the convolution layer is the last, TODO
-            pass
+            # use MSE
+            d = neural_network.ReLU(self.a) - y   
         else:
             d = self.next_layer.delta.copy()
-            # backprop ReLU
-            d[self.z<=0] = 0
-            # get the error, kernel error and bias error through backpropagation
-            self.delta, k, b = self.d_convolve(d)
-            # update kernels
-            for i in range (self.weights.shape[1]):
-                self.kernels -= learning_rate*k
-            # update bias
-            for i in range(len(self.bias)):
-                self.bias -= learning_rate*b
+        # backprop ReLU
+        d[self.a<=0] = 0
+        # get the error, kernel error and bias error through backpropagation
+        self.delta, k, b = self.d_convolve(d)
+        # update kernels
+        self.kernels -= learning_rate*k
+        # update bias
+        self.bias -= learning_rate*b
+        # keep propagating
         if (self.previous_layer is not None):
             self.previous_layer.back_propagate(learning_rate=learning_rate)
 
@@ -114,11 +113,11 @@ class Conv2D(neural_network.Layer):
             for i in range(x-k_size):
                 for j in range(y-k_size): 
                     # kernel weights delta
-                    d_kernels[k] += delta[k,i,j] * self.z[i:i+k_size,j:j+k_size,:]
+                    d_kernels[k] += X[i,j,k] * self.z[i:i+k_size,j:j+k_size,:]
                     # error
-                    error[i:i+k_size,j:j+k_size,:] += delta[k,i,j] * self.kernels[k]
+                    error[i:i+k_size,j:j+k_size,:] += X[i,j,k] * self.kernels[k]
             # loss gradient of the bias
-            d_bias[k] = np.sum(delta[k])
+            d_bias[k] = np.sum(X[k])
         return error, d_kernels, d_bias
     
 def initialize_kernels(n,k=3,c=3):
