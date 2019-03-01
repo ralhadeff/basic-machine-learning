@@ -86,7 +86,7 @@ class Conv2D(neural_network.Layer):
         n,k,_,ch = self.kernels.shape
         x,y,_ = X.shape
         # create new images array (one image for each kernel)
-        convolved = np.zeros([n,x-k+1,y-k+1])
+        convolved = np.zeros([x-k+1,y-k+1,n])
         # skip on edges (left and right)
         s_l = k//2
         s_r = k-s_l-1
@@ -96,7 +96,7 @@ class Conv2D(neural_network.Layer):
             for i in range(s_l,x-s_r):
                 for j in range(s_l,y-s_r):
                     # sum over all kernels
-                    convolved[kernel,i-s_l,j-s_l] = (X[i-s_l:i+s_r+1,j-s_l:j+s_r+1,:] 
+                    convolved[i-s_l,j-s_l,kernel] = (X[i-s_l:i+s_r+1,j-s_l:j+s_r+1,:] 
                                                      * self.kernels[kernel,:,:,:]).sum() + self.bias[kernel]
         return convolved
 
