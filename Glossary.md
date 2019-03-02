@@ -1,6 +1,6 @@
 ## Glossary
 
-This is an incomplete list of terms relating to Data Science and Machine Learning.  
+An incomplete list of terms related to Data Science and Machine Learning.  
   
 Note: these descriptions are written in a way that helps me understand and remember them better, and I apologize if anyone finds them unhelpful.
 <br>
