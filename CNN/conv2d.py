@@ -5,14 +5,15 @@ import neural_network
 
 class Conv2D(neural_network.Layer):
     
-    def __init__(self,no_of_kernels,color_channels,kernel_size=3,previous_layer=None,activation='relu',name='unnamed'):
+    def __init__(self,no_of_kernels,color_channels,kernel_size=3,activation='relu',previous_layer=None,name='unnamed'):
         '''
         A convolutional layer for 2D images
             User specifies:
                 the number of kernels and the kernel size
                     kernels are square, have a stride of 1 and no padding
+                the depth of the input (color channel or similar)
+                the activation function (for after the convolution)
                 the previous layer that sends input into this layer
-                the activation function
                 optional: a name
         '''
         # save parameters for initialization
@@ -20,17 +21,16 @@ class Conv2D(neural_network.Layer):
         self.c = color_channels
         self.k = kernel_size
         
+        # set the activation function
+        self.set_activation(activation)
+
         # set hierarchy (same as Layer)
         self.previous_layer = previous_layer
         self.next_layer = None
         if (self.previous_layer is not None):
             previous_layer.next_layer = self
             previous_layer.initialize_weights()
-        self.set_activation(activation)
         self.name = name
-        # activation and backprop are explicit
-        self.func = None
-        self.deriv = None
            
     def initialize_weights(self):
         '''Initialize kernels and bias'''
@@ -38,34 +38,49 @@ class Conv2D(neural_network.Layer):
         self.bias = np.zeros(self.n)    
     
     def set_activation(self,func):
-        '''Conv2D has fixed activation (the convolution)'''
-        pass
+        '''
+        Set the activation function
+        '''
+        if (func=='ReLU'):
+            # set ReLU and the derivative
+            self.func = neural_network.ReLU
+            self.deriv = neural_network.dReLU
+        elif (func=='sigmoid'):
+            self.func = neural_network.sigmoid
+            self.deriv = neural_network.dSigmoid
+        elif (func=='softmax'):
+            self.func = neural_network.softmax
+            # note that for softmax this is not actually used
+            self.deriv = neural_network.dSoftmax            
+        elif (func=='none'):
+            self.func = lambda x:x
+            self.deriv = lambda x:1
         
     def set_manual_activation_function(self,function,derivative):
-        '''Conv2D has fixed activation (the convolution)'''
-        pass
+        '''
+        Set user provided custom functions (including the derivative)
+        '''
+        self.func = function
+        self.deriv = derivative
     
     def feed_forward(self,z):
         '''Propagate images forward into this layer'''
         self.z = z
         # do convolution and apply ReLU
         self.a = self.convolve(z)
-        # apply ReLU
-        a = neural_network.ReLU(self.a)
+        # apply activation function
+        a = self.func(self.a)
         if (self.next_layer is not None):
             return self.next_layer.feed_forward(a)
         else:
             return a
         
     def back_propagate(self,y=None,learning_rate=0.0001):
-        '''Propagate errors backward into this layer''' 
-        if (self.next_layer is None):
-            # use MSE
-            d = neural_network.ReLU(self.a) - y   
-        else:
-            d = self.next_layer.delta.copy()
-        # backprop ReLU
-        d[self.a<=0] = 0
+        '''Propagate errors backward through this layer''' 
+        # backprop activation
+        # check this
+        d = y.copy() * self.deriv(self.a)
+        # backprop the convolution
         # get the error, kernel error and bias error through backpropagation
         self.delta, k, b = self.d_convolve(d)
         # update kernels
@@ -74,7 +89,7 @@ class Conv2D(neural_network.Layer):
         self.bias -= learning_rate*b
         # keep propagating
         if (self.previous_layer is not None):
-            self.previous_layer.back_propagate(learning_rate=learning_rate)
+            self.previous_layer.back_propagate(self.delta,learning_rate=learning_rate)
 
     def convolve(self,X):
         '''
