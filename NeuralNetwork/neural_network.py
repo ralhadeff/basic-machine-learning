@@ -89,6 +89,7 @@ class Layer():
         '''
         Backpropagate true y values into the network for training
             Learning rate can be specified
+            For internal layers, y is the delta to be propagated backwards
         '''
         if (self.next_layer is None):
             # last layer's error and delta are the derivative of the loss function
@@ -105,17 +106,17 @@ class Layer():
                 self.delta = self.error * self.deriv(self.z)
         else:
             # generic layer, propagate error from the next layer's error
-            self.error = self.weights @ self.next_layer.delta
+            self.error = self.weights @ y
             self.delta = self.error * self.deriv(self.z)
             for i in range (self.weights.shape[1]):
                 # update weights
-                self.weights[:,i] -= learning_rate * (self.a * self.next_layer.delta[i])
+                self.weights[:,i] -= learning_rate * (self.a * y[i])
             for i in range(len(self.bias)):
                 # update bias
-                self.bias[i] -= learning_rate * self.next_layer.delta[i]
+                self.bias[i] -= learning_rate * y[i]
         if (self.previous_layer is not None):
             # continue to backpropagate as long as there are layers
-            self.previous_layer.back_propagate(learning_rate=learning_rate)
+            self.previous_layer.back_propagate(self.delta,learning_rate)
         
 def ReLU(x):
     '''ReLU function'''
