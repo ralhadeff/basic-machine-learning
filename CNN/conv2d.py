@@ -5,7 +5,7 @@ import neural_network
 
 class Conv2D(neural_network.Layer):
     
-    def __init__(self,no_of_kernels,color_channels,kernel_size=3,activation='relu',previous_layer=None,name='unnamed'):
+    def __init__(self,no_of_kernels,color_channels,kernel_size=3,activation='ReLU',previous_layer=None,name='unnamed'):
         '''
         A convolutional layer for 2D images
             User specifies:
@@ -36,33 +36,7 @@ class Conv2D(neural_network.Layer):
         '''Initialize kernels and bias'''
         self.kernels = initialize_kernels(self.n,self.k,self.c)
         self.bias = np.zeros(self.n)    
-    
-    def set_activation(self,func):
-        '''
-        Set the activation function
-        '''
-        if (func=='ReLU'):
-            # set ReLU and the derivative
-            self.func = neural_network.ReLU
-            self.deriv = neural_network.dReLU
-        elif (func=='sigmoid'):
-            self.func = neural_network.sigmoid
-            self.deriv = neural_network.dSigmoid
-        elif (func=='softmax'):
-            self.func = neural_network.softmax
-            # note that for softmax this is not actually used
-            self.deriv = neural_network.dSoftmax            
-        elif (func=='none'):
-            self.func = lambda x:x
-            self.deriv = lambda x:1
-        
-    def set_manual_activation_function(self,function,derivative):
-        '''
-        Set user provided custom functions (including the derivative)
-        '''
-        self.func = function
-        self.deriv = derivative
-    
+
     def feed_forward(self,z):
         '''Propagate images forward into this layer'''
         self.z = z
