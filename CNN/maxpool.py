@@ -25,6 +25,10 @@ class MaxPool(neural_network.Layer):
         # save name
         self.name = name
 
+    def initialize_weights(self):
+        # override Layer
+        pass
+        
     def feed_forward(self,z):
         # do max pooling then feed forward or return output
         self.z = z
