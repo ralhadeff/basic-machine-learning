@@ -5,4 +5,5 @@ For practical reasons, the VAE is using TensorFlow rather than my implementation
 `vae.py` file contains a class for a VAE that can process images. There are two examples, one on MNIST and one on randomly generated rectangles.
 
 `streered_vae.ipynb` is an experimental hybrid, where the user provides images but also the labels for the desired latent features. The VAE learn to encode using the specified features, and from those features.  
-The application that I want to apply this to is inputing cell image z-planes, and teaching a network to reconstruct the images, but also be able to generate in-between (wrt z-axis) images for a continuous reconstruction of the 3D image (currently the images produced by the group I am working with are contains few discrete stacks). 
+The application that I want to apply this to is inputing cell image z-planes, and teaching a network to reconstruct the images, but also be able to generate in-between (wrt z-axis) images for a continuous reconstruction of the 3D image (currently the images produced by the group I am working with are contains few discrete stacks).  
+The trained latent features can encompass the whole latent feature space or only part of it (see `steered_vae_partial.ipynb` as well).
