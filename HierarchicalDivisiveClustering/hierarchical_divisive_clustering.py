@@ -24,10 +24,7 @@ class HierarchicalDivisive():
 
     @staticmethod
     def find_cluster(X,p):
-        '''
-        Find all points in X that are closer to p than to the remainder of the points in X
-            User can specify how many iterations back and forth are desired (to refine the cluster)
-        '''
+        '''Find all points in X that are closer to p than to the remainder of the points in X'''
         # new cluster
         cluster = [p]
         for i in range(len(X)):
@@ -40,14 +37,12 @@ class HierarchicalDivisive():
             if (d_cluster<d_remainder):
                 # point is closer to cluster
                 cluster.append(i)
-        # remove p (which was added a second time in the loop)
+        # remove initially added p (since p was added a second time while looping)
         cluster.pop(0)
         return np.array(cluster)
 
     def fit(self,X,k):
-        '''
-        Splits data into k clusters
-        '''
+        '''Splits data into k clusters'''
         clusters = Tree(X)
         while (clusters.count()<k):
             # find biggest cluster tree and get the data
