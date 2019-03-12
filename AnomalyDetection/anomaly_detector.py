@@ -1,15 +1,15 @@
-"""
-An anomaly detecting tool
-"""
+'''
+An anomaly detection tool
+'''
 
 import numpy as np
 
 class AnomalyDetector():
     
     def __init__(self):
-        """
+        '''
         An anomaly detector, using univariate or multivariate Gaussians to determine outliers
-        """
+        '''
         pass
     
     def fit(self,X):
