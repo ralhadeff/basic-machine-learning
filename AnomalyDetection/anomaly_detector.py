@@ -13,10 +13,10 @@ class AnomalyDetector():
         pass
     
     def fit(self,X):
-        """
+        '''
         Provide 'good' data to the detector to establish what are the ranges
             of values that are acceptable. It is ok if the data has some outliers
-        """
+        '''
         self.mu = X.mean(axis=0)
         self.var = X.var(axis=0)
         self.sigma = np.cov(X.T)
