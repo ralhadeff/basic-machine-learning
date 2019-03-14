@@ -1,16 +1,16 @@
-"""
+'''
 This tool produces a learning curve for a given estimator
 The estimator must have a .score(X,y) function
-"""
+'''
 
 import numpy as np
 
 def learning_curve(estimator,X_train,y_train,X_validation,y_validation,steps=1,fitting_params=None):
-    """
+    '''
     Calculate the learning curve, train vs validation
     steps defines the step size for iterating over datapoints
     fitting_params is an optional library of parameters to pass to the fit function of the specific estimator
-    """
+    '''
     # number of points that will be generated:
     n = len(range(X_train.shape[1],X_train.shape[0],steps))
     # score array
