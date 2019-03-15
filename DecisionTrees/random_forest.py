@@ -64,7 +64,7 @@ class RandomForest():
         return winners
         
     def score(self,X,y):
-        """Score data and true labels using total accuracy"""
+        '''Score data and true labels using total accuracy'''
         pred = self.predict(X)
         return (y==pred).mean()
 
