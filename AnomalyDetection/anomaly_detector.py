@@ -22,16 +22,16 @@ class AnomalyDetector():
         self.sigma = np.cov(X.T)
     
     def detect_anomalous(self,X,epsilon,variate='univariate'):
-        """
+        '''
         Given a dataset, return the index of all anomalous points within the set
-        """
+        '''
         p = self.calculate_p(X,variate)
         return np.nonzero(p<=epsilon)           
     
     def calculate_p(self,X,variate='univariate'):
-        """
+        '''
         Find the p values of all points in a dataset
-        """
+        '''
         if (variate=='univariate' or variate=='uni'):
             # univariate, meaning each feature has its own p measured separately
             # calculate individual p(x)
@@ -57,12 +57,12 @@ class AnomalyDetector():
             return p
         
     def suggest_epsilon(self,x,variate='univariate'):
-        """
+        '''
         Provided with a known anomaly (or multiple anomalies), return the lowest epsilon value
             that would detect them all.
             This can serve as a guideline for future detections
                 user is advised to increase the given epsilon slightly, to be on the safe side
-        """
+        '''
         p = self.calculate_p(x,variate)
         return p.max()   
 
