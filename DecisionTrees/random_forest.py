@@ -1,6 +1,6 @@
-"""
+'''
 Random forest classifier implementation
-"""
+'''
 
 import numpy as np
 import math
@@ -11,20 +11,20 @@ import decision_tree
 class RandomForest():
     
     def __init__(self,n_trees=10,n_samples='all',n_features='auto'):
-        """
+        '''
         Define the number of trees to be used
             the number of sample to use for each tree (with bootstrapping)
             the number of features to use
         Defaults are 10, all samples (but with bootstrap), and sqrt(X.shape[1])
-        """
+        '''
         self.n_trees = n_trees
         self.n_samples = n_samples
         self.n_features = n_features
         
     def fit(self,X,y,max_depth=15):
-        """
+        '''
         Fit the data to all trees
-        """
+        '''
         # save labels
         self.labels = np.unique(y)
         # determine n_samples
@@ -51,9 +51,7 @@ class RandomForest():
             self.trees.append(tree)
 
     def predict(self,X):
-        """
-        Predict labels
-        """
+        '''Predict labels'''
         # see ovo.py
         predictions = np.zeros((len(X),len(self.trees)),dtype=self.labels.dtype)
         i=0
