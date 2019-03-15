@@ -79,3 +79,5 @@ class Apriori():
         return pd.DataFrame(np.hstack((names,numbers)),
                             columns=['item_a','item_b','support','confidence(left)','lift'])
 
+if (__name__ == '__main__'):
+    print("This module is not intended to run by iself")
