@@ -8,12 +8,12 @@ from collections import Counter
 from decision_tree import DecisionTree, Branch
 
 class DecisionTreeRegressor(DecisionTree):
-    """
+    '''
     A decision tree regressor
-    """
+    '''
     
     def fit(self,X,y):
-        """Find the best splits recursively until the limit is reached"""
+        '''Find the best splits recursively until the limit is reached'''
         if (self.max_features=='all' or self.max_features>=X.shape[1]):
             skip = []
         else:
@@ -23,7 +23,7 @@ class DecisionTreeRegressor(DecisionTree):
         self.head.reg_split(X,y,skip)
         
     def predict(self,X):
-        """Predict the values of y for the given X"""       
+        '''Predict the values of y for the given X'''       
         # setup array for predictions
         y = np.zeros(len(X))
         # external counter is faster
@@ -35,20 +35,20 @@ class DecisionTreeRegressor(DecisionTree):
         return y
     
     def score(self,X,real_y):
-        """Predict and give a score for the current data and true values"""
+        '''Predict and give a score for the current data and true values'''
         # default is mse
         pred = self.predict(X)
         return ((real_y-pred)**2).mean()
     
 class RBranch(Branch):
-    """
+    '''
     A modified branch object for the decision tree regressor
-    """
+    '''
     
     def reg_split(self,X,y,skip=[]):
-        """
+        '''
         Splits the data and generates new branches under current branch as necessary
-        """
+        '''
         # find best split (stdev not required)
         self.criterion = find_reg_split(X,y,skip=skip)[:2]
         if (self.criterion[0] == -1):
@@ -81,13 +81,13 @@ class RBranch(Branch):
                     self.ygt = ygt.mean()
         
     def get_value(self,x):
-        """Same as get_label"""
+        '''Same as get_label'''
         return Branch.get_label(self,x)
     
 def find_reg_split(X,y,min_group_size=2,skip=[]):
-    """
+    '''
     Finds the best split in X in terms of lowest stdev after the split
-    """
+    '''
     # best (column, <=value, stdev)
     # starting values
     best = (-1,0,float('inf'))
