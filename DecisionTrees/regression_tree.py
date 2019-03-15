@@ -1,6 +1,6 @@
-"""
+'''
 Decision tree regressor
-"""
+'''
 
 import numpy as np
 from collections import Counter
