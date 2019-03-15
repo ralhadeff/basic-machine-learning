@@ -1,22 +1,22 @@
-"""
+'''
 Decision tree classifier
-"""
+'''
 
 import numpy as np
 from collections import Counter
 
 class DecisionTree():
-    """
+    '''
     A decision tress classifier
-    """
+    '''
     
     def __init__(self,max_depth=15,max_features='all'):
-        """Maximum depth to avoid over-recursion"""
+        '''Maximum depth to avoid over-recursion'''
         self.max_depth = max_depth
         self.max_features = max_features
 
     def fit(self,X,y):
-        """Find the best splits recursively until the limit, or a prefect classification is reached"""
+        '''Find the best splits recursively until the limit, or a prefect classification is reached'''
         # save labels and convert all labels to numbers
         self.labels = np.unique(y)
         # use separate array to avoid conflict if a label is e.g. '1'
@@ -33,7 +33,7 @@ class DecisionTree():
         self.head.split(X,y,skip)
         
     def predict(self,X):
-        """Predict the labels of give data"""
+        '''Predict the labels of give data'''
         # setup numerical labels vector
         y = np.zeros(len(X),dtype=int)
         # external counter is faster
@@ -49,15 +49,15 @@ class DecisionTree():
         return predictions
     
     def score(self,X,y):
-        """Predict and give a score for the current data and true labels"""
+        '''Predict and give a score for the current data and true labels'''
         # default is total accuracy
         pred = self.predict(X)
         return (y==pred).mean()
     
 class Branch():
-    """
+    '''
     A branch object for the decision tree - with left and right branches, a splitting criterion, and labels of its own
-    """
+    '''
     
     def __init__(self,depth):
         # left branch is for the <= (le), right branch is for the > (gt)
@@ -66,9 +66,9 @@ class Branch():
         self.depth = depth
     
     def split(self,X,y,skip=[]):
-        """
+        '''
         Splits the data and generates new branches under current branch as necessary
-        """
+        '''
         # find best split (gini score is not required)
         self.criterion = find_best_split(X,y,skip=skip)[:2]
         if (self.criterion[0] == -1):
@@ -110,7 +110,7 @@ class Branch():
                     self.ygt = Counter(ygt).most_common(1)[0][0]
     
     def get_label(self,x):
-        """Make a prediction, recursively looking for the correct leaf"""
+        '''Make a prediction, recursively looking for the correct leaf'''
         
         # compare to criterion
         if (x[self.criterion[0]]<=self.criterion[1]):
@@ -125,16 +125,16 @@ class Branch():
                 return self.right.get_label(x)
 
 def gini(y):
-    """
+    '''
     Calculate and return the gini index of the given array of labels
-    """
+    '''
     uniques,counts = np.unique(y,return_counts=True)
     return 1-((counts/len(y))**2).sum()
 
 def find_best_split(X,y,min_group_size=2,skip=[]):
-    """
+    '''
     Finds the best split in X in terms of lowest gini index in y after the split
-    """
+    '''
     # best (column, <=value, gini)
     # starting values
     best = (-1,0,10)
