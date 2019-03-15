@@ -1,15 +1,15 @@
-"""
+'''
 A tool to generate cumulative accuracy profiles (CAP) for binary classifications
-"""
+'''
 
 import numpy as np
 
 def cap(true_y,probabilities,perfect=False):
-    """
+    '''
     Cumulative accuracy profile (CAP)
     input true labels and probability output from classifier
     perfect can be set to true to output the perfect results (for plotting) for this dataset
-    """
+    '''
     # if perfect is requested, generate 3 point array and exit early
     if (perfect):
         # total True
