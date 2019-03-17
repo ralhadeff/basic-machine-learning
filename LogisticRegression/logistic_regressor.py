@@ -1,6 +1,6 @@
-"""
+'''
 Simple logistic regressor that uses batch/mini-batch/stochastic gradient descent
-"""
+'''
 
 import pandas as pd
 import numpy as np
@@ -20,7 +20,7 @@ class LogisticRegressor(object):
         self.coeff=None
     
     def fit(self,X,y,add_x0=True,method='stochastic',learning_rate=0.001,epochs=100,starting_coeff=None,bin_size=1):
-        """
+        '''
         This is a simple logistic regressor
         it can use batch gradient decent, or stochastic gradient decent to find the coeffcients
         it also automatically adds the first column x0 (all 1's) if it is missing
@@ -28,7 +28,7 @@ class LogisticRegressor(object):
         starting coefficients can be provided
         
         bin_size is set to all dataset for 'batch'
-        """
+        '''
         # convert dataframe to ndarray
         if (type(X) is pd.DataFrame):
             X = X.values
@@ -88,11 +88,11 @@ class LogisticRegressor(object):
         # end of epochs loop
 
     def predict(self,X, probability=False, threshold=0.5):
-        """
+        '''
         Predict and returns the values h for all samples provided
         probability is whether the user wants output as probabilities or labels
         threshold is the threshold for labeling '1', only applied if probability is set to False
-        """
+        '''
         # convert dataframe to ndarray if needed
         if (type(X) is pd.DataFrame):
             X = X.values
@@ -109,9 +109,9 @@ class LogisticRegressor(object):
             return np.vectorize(lambda x: 1 if x>=threshold else 0)(prob)
 
     def score(self,X,y):
-        """
+        '''
         Return the score on the given test set
-        """
+        '''
         # try to use metrics' accuracy
         try:
             # the reason this is better than the built-in function is in case I ever want to modify lr_metrics module
