@@ -1,9 +1,9 @@
-"""
+'''
 This is a simple linear regression that can use the normal equation, batch gradient descent or stochastic gradient decent
 It uses a simple learning algorithm, with a fairly primitive self correcting learning rate,
 
 Note - because it is simplistic, feature standartization (or normalization) is crucial. Also, convergence is very slow
-"""
+'''
 
 import numpy as np
 import pandas as pd
@@ -20,7 +20,7 @@ class LinearRegressor(object):
     
     def fit(self,X,y,add_x0=True,method='normal',learning_rate=0.0001,epochs=100,starting_coeff=None,tolerance=
                          0.01, bin_size=10):
-        """
+        '''
         This is a simple linear regressor
         it uses the normal equation, batch gradient decent, or stochastic gradient decent to find the coeffcients
         it also automatically adds the first column x0 (all 1's) if it is missing
@@ -33,7 +33,7 @@ class LinearRegressor(object):
 
         if using stochastic gradient descent, same as batch, but with bins instead of the whole set
 
-        """
+        '''
         # convert dataframe to ndarray
         if (type(X) is pd.DataFrame):
             X = X.values
@@ -111,9 +111,9 @@ class LinearRegressor(object):
             # end of epochs loop
 
     def predict(self,X):
-        """
+        '''
         Predict and returns the values h for all samples provided
-        """
+        '''
         # convert dataframe to ndarray if needed
         if (type(X) is pd.DataFrame):
             X = X.values
@@ -126,9 +126,9 @@ class LinearRegressor(object):
         return np.squeeze(np.asarray(np.matmul(X,self.coeff)))
 
     def score(self,X,y):
-        """
+        '''
         Return the score on the given test set
-        """
+        '''
         # try to use metrics' MSE
         try:
             # the reason this is better than the built-in function is in case I ever want to modify lr_metrics module
