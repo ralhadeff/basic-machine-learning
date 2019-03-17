@@ -1,16 +1,16 @@
-"""
+'''
 A tool for calculating the data for a validation curve
 The tool takes an estimator and runs a k-fold CV on a range of values for one hyper-parameters
     And returns an array for ploting the validation curve
     hyper-parameter    training_score    cross-validation_score
-"""
+'''
 
 import numpy as np
 from collections import Iterable
 import kfold
 
 def validation_curve(estimator, X, y, params, cv_k=5, scoring=None, param_for_fit=True):
-    """
+    '''
     Performs fitting of estimator using the parameters and all values of the hyper-parameter
         provided in a dictionary
     Performance is measured by k-fold cross-validation,
@@ -22,7 +22,7 @@ def validation_curve(estimator, X, y, params, cv_k=5, scoring=None, param_for_fi
         either way, user should provide an instance of estimator
 
     Returns an array of the results
-    """
+    '''
     # find the key of the target hyper-parameter
     for i in params:
         if (isinstance(params[i],Iterable)):
