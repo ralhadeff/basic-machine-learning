@@ -1,16 +1,16 @@
-"""
+'''
 Label encoder
-"""
+'''
 
 import numpy as np
 import pandas as pd
 
 def encode(X,omit_one=None):
-    """
+    '''
     Label encoder - will transform a categorical column into a sparse matrix of labels
         by default, skip the last value (all 0's)
     User can provide a numpy array or a pandas DataFrame and output will match the type
-    """
+    '''
     # number of samples
     m = len(X)
     # unique labels
