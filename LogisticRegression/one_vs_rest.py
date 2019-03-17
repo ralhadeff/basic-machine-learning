@@ -1,7 +1,7 @@
-"""
+'''
 One-vs-Rest implementation using n Logistic_regressors
 Treat the ovr object like a regressor, it generates, trains and predicts using n regressors behind the scenes
-"""
+'''
 
 import numpy as np
 import logistic_regressor
@@ -17,10 +17,10 @@ class OvR(object):
     
     def fit(self,X,y,add_x0=True,method='stochastic',learning_rate=0.0001,
             epochs=100,starting_coeff=False,bin_size=10):
-        """
+        '''
         Fits the data into n logistic regressors, using the same parameters provided here
         starting coefficients set to True will iterate all regressors using each's own current coefficients
-        """
+        '''
         
         # determine how many regressors are needed
         self.unique = np.unique(y)
@@ -58,4 +58,3 @@ class OvR(object):
 
 if (__name__ == '__main__'):
     print("This module is not intended to run by iself")
-    
