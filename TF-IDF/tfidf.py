@@ -119,3 +119,6 @@ class TFIDF():
             relevant.append(
                 [self.unique_words[i] for i in np.argsort(doc)[::-1][:no_of_words]])
         return relevant
+
+if (__name__ == '__main__'):
+    print("This module is not intended to run by iself")
