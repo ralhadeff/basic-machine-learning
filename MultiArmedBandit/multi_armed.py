@@ -1,17 +1,17 @@
-"""
+'''
 This module contains several algorithms for optimizing the multi-armed bandit choice / explore-exloit strategy
-"""
+'''
 
 import numpy as np
 
 class BasicPlayer():
-    """
+    '''
     The basic algorithm for keeping track of performance of the 'bandits'
     This class is a scaffold on which the other algorithms will be constructed upon (using inheritence)
-    """
+    '''
     
     def start(self,bandits):
-        """Effectively initialize the player"""
+        '''Effectively initialize the player'''
         # reset total accumulated profit (or loss)
         self.profit = 0
         # number of bandits
@@ -25,16 +25,16 @@ class BasicPlayer():
         self.counts = np.ones(n,int)
         
     def correct_counts(self):
-        """
+        '''
         If user wishes to correct the counts, this method should not be called before running several iterations
-        """
+        '''
         self.counts-=1
     
     def update(self,bandit,outcome):
-        """
+        '''
         Update player after having played a bandit
         Bandit is an index
-        """
+        '''
         self.means[bandit] = ((self.means[bandit]*self.counts[bandit])+outcome)/(self.counts[bandit]+1)
         # add one count
         self.counts[bandit]+=1
@@ -42,7 +42,7 @@ class BasicPlayer():
         self.profit+=outcome
        
     def regret(self,bandits):
-        """Returns the current regret"""
+        '''Returns the current regret'''
         # find the highest true mean
         u_best = max([b.mean for b in bandits])
         # total plays
@@ -55,13 +55,13 @@ class BasicPlayer():
         return round(self.profit,2)
   
     def __str__(self):
-        """For print-out purposes"""
+        '''For print-out purposes'''
         return 'Name not specified'
 
 class RandomPlayer(BasicPlayer):
-    """
+    '''
     Random player picks one bandit with no preference. Used for testing purposes
-    """
+    '''
             
     def choose(self):
         return np.random.randint(0,len(self.means))
@@ -70,18 +70,18 @@ class RandomPlayer(BasicPlayer):
         return 'RandomPlayer'
 
 class EpsilonGreedy(BasicPlayer):
-    """
+    '''
     Epsilon greedy player chooses greedily (higher estimated mean),
     with the exception of random exploration at a chance of epsilon (typically a small number)    
-    """
+    '''
     
     def __init__(self,epsilon):
-        """Epsilon is a hyper-parameter, typically in the range of 0.01"""
+        '''Epsilon is a hyper-parameter, typically in the range of 0.01'''
         BasicPlayer.__init__(self)
         self.epsilon = epsilon
            
     def choose(self):
-        """Randomly determine whether to explore or exploit"""
+        '''Randomly determine whether to explore or exploit'''
         rand = np.random.rand()
         if (rand<self.epsilon):
             # explore - randomly choose any bandit
