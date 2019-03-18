@@ -5,7 +5,7 @@ import string
 
 class TFIDF():
     
-    def fit(self,data,remove_punctuation='default',skip_words=None,ignore_case=False):
+    def fit(self,data,remove_punctuation='default',skip_words=None,ignore_case=False,return_processed=False):
         '''
         Fit the data and build a tf-idf matrix
             Data can be:
@@ -20,6 +20,8 @@ class TFIDF():
             
             By default, case is ignored, user can specify that case should be ignored
                 Note: ignore_case only works if strings are provided
+
+            User can request for the modified data list of lists, for controls
         '''
         # convert to list of lists if necessary
         if (type(data[0]) is str):
@@ -74,8 +76,9 @@ class TFIDF():
         self.tf = tf
         self.tf_idf = tf*idf
         
-        # return the processed document
-        return data
+        if (return_processed):
+            # return the processed document
+            return data
     
     def search_word(self,word,prune=False,return_tf_idf=False):
         '''
