@@ -1,6 +1,6 @@
-"""
+'''
 Support vector machine implmentation (Pegasos version)
-"""
+'''
 # currently using only the 'linear kernel' and only binary classification
 
 import numpy as np
@@ -15,13 +15,13 @@ class SVM():
         self.labels=None
  
     def fit(self,X,y,learning_rate=1,epochs=1000,C=1,add_x0=True):
-        """
+        '''
         Fit the SVM using data X and labels y (1,-1)
         Learning rate and regularization parameter C can be specified
         Number of epochs can be specified
         
         Note: regularization decays as 1/epoch
-        """
+        '''
         # read labels, change y to -1,1 and save labels for predictions later
         labels = np.unique(y)
         if (labels[0]!=-1 or labels[1]!=1):
@@ -63,9 +63,9 @@ class SVM():
         self.weights = w
     
     def predict(self,X):
-        """
+        '''
         Predict the labels on a given dataset
-        """
+        '''
         # add 1 to X if needed (only check if one column is missing, and assume that it is the constants)
         if (X.shape[1]==len(self.weights)-1):
             X = np.concatenate((np.ones((len(X),1)),X),1)
@@ -79,9 +79,9 @@ class SVM():
         return pred
         
     def score(self,X,y):
-        """
+        '''
         Return the score on the given test set
-        """
+        '''
         # same as LogisticRegressor
         try:
             return log_metrics.accuracy(y,self.predict(X))
@@ -90,4 +90,4 @@ class SVM():
             return (y==pred).mean()
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
