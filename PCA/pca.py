@@ -1,16 +1,16 @@
-"""
+'''
 Principle component analysis, including linear algebra tools necessary to perform it
 
 Specifically: calculating covariance, the covariance matrix, eigenvectors and eigenvalues
-"""
+'''
 
 import numpy as np
 import math
 
 class PCA():
-    """
+    '''
     Principle component analysis (PCA) solver
-    """
+    '''
 
     def __init__(self):
         self.vectors=None
@@ -19,9 +19,9 @@ class PCA():
         self.k=None
 
     def fit(self,data):
-        """
+        '''
         finds the eigenvectors and eigenvalues
-        """
+        '''
         # save means for later
         self.means = data.mean(axis=0)
         # move data to origin
@@ -38,10 +38,10 @@ class PCA():
         self.vectors = np.asarray(vectors)
 
     def reduce_dimensionality(self,data,k):
-        """
+        '''
         Transform given data, reducing it to k dimensions,
         using eigenvectors previously computed
-        """
+        '''
         # move data to origin
         A = data-self.means
         W = self.vectors[:k]
@@ -49,13 +49,13 @@ class PCA():
         return np.matmul(W,A.T).T
 
     def restore_dimensionality(self,data):
-        """
+        '''
         Transform give data, increasing it back to n dimensions, reversing the reduction of the PCA
-        """
+        '''
         return np.dot(data, self.vectors[:self.k]) + self.means
 
 def covar(x,y):
-    """ Calculate the covariance between two 1-d arrays """
+    '''Calculate the covariance between two 1-d arrays'''
     mx = x.mean()
     my = y.mean()
     total = 0
@@ -64,7 +64,7 @@ def covar(x,y):
     return total/(len(x)-1)
 
 def covariance_matrix(M):
-    """ Calculate the covariance matrix of a dataset """
+    '''Calculate the covariance matrix of a dataset'''
     features = M.shape[1]
     output = np.zeros((features,features))
     for i in range(features):
@@ -74,7 +74,7 @@ def covariance_matrix(M):
 
 # inspited by reading http://madrury.github.io/jekyll/update/statistics/2017/10/04/qr-algorithm.html
 def power_iteration(A, eigens=None, tol=0.000001):
-    """
+    '''
     The power iteration method to find principle components of give matrix A,
     A list of previously found eigenvectors can be provided to find the orthogonal eigenvectors
     The method outputs one eigenvector at a time, in eigenvalue descending order
@@ -82,7 +82,7 @@ def power_iteration(A, eigens=None, tol=0.000001):
 
     This code was heavily inspired by the fine explanations provided in the following page:
     http://madrury.github.io/jekyll/update/statistics/2017/10/04/qr-algorithm.html
-    """
+    '''
     # if previously found eigenvectors not specified, start with a random vector
     if (eigens is None or len(eigens)==0):
         v = np.random.normal(size=len(A))
@@ -106,11 +106,11 @@ def power_iteration(A, eigens=None, tol=0.000001):
     return v
 
 def find_ortho(v, start=None):
-    """
+    '''
     Find an arbitrary vector that is perpendicular to the give vector/s in v
     A starting vector can be give to orthoganlize it. 
     This is necessary in case some tranformation, due to machine precision, breaks orthogonality
-    """
+    '''
     # determine how many vectors are in v
     if (isinstance(v,list)):
         orthos = len(v)
