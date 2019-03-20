@@ -45,18 +45,14 @@ class SVMrbf():
         return matrix
 
     def predict(self,X):
-        '''
-        Predict labels of given dataset
-        '''
+        '''Predict labels of given dataset'''
         if (X[0,0]==1 and len(np.unique(X[:,0]))==1):
             X = X[:,1:]
         X = self.transform(X)
         return self.svm.predict(X)
 
     def score(self,X,y):
-        '''
-        Predict and score the given data and labels
-        '''
+        '''Predict and score the given data and labels'''
         if (X[0,0]==1 and len(np.unique(X[:,0]))==1):
             X = X[:,1:]
         X = self.transform(X)
