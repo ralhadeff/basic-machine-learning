@@ -1,8 +1,8 @@
-"""
+'''
 Generic One-vs-One implementation
 Treat the OvO object like a regressor. Internally, it generates, trains, and predicts 
     using k(k-1)/2 regressors.
-"""
+'''
 
 import numpy as np
 import inspect
@@ -11,10 +11,10 @@ from collections import Counter
 class OvO():
     
     def fit(self,estimator,X,y,args=None):
-        """
+        '''
         Fits the data into k(k-1)/2 estimators of the provided type, using the args parameter dictionary
         Estimator should be the class of the estimator that is desired (not an instance)
-        """   
+        '''   
         # estimator must be the class itself, and not an instance
         # if an instance is given, print a warning
         if (not inspect.isclass(estimator)):
@@ -46,9 +46,9 @@ class OvO():
                 self.regressors[pair].fit(x_c,y_c,**args)                
 
     def predict(self,X):
-        """
+        '''
         Predicts the labels for the given data (using internally saved labels)
-        """        
+        '''        
         # save predictions in an array
         predictions = np.zeros((len(X),len(self.tuples)),dtype=self.labels.dtype)
         # get predictions one regressor at a time
@@ -63,9 +63,10 @@ class OvO():
         return winners
     
     def score(self,X,true_y,score=None):
-        """
-        
-        """
+        '''
+        Scores the predictions on given X, compared to give true y labels.
+            User can provide a custom scoring function, default is accuracy
+        '''
         pred = self.predict(X)
         if (score is not None):
             return score(true_y,pred)
@@ -74,4 +75,4 @@ class OvO():
             return (pred==true_y).mean()
             
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
