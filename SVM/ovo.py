@@ -46,9 +46,7 @@ class OvO():
                 self.regressors[pair].fit(x_c,y_c,**args)                
 
     def predict(self,X):
-        '''
-        Predicts the labels for the given data (using internally saved labels)
-        '''        
+        '''Predicts the labels for the given data (using internally saved labels)'''        
         # save predictions in an array
         predictions = np.zeros((len(X),len(self.tuples)),dtype=self.labels.dtype)
         # get predictions one regressor at a time
