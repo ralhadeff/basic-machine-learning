@@ -94,21 +94,21 @@ class EpsilonGreedy(BasicPlayer):
         return 'EpsilonGreedy epsilon: '+str(self.epsilon)
 
 class DecayingEpsilonGreedy(EpsilonGreedy):
-    """
+    '''
     Same as epsilon greedy, but epsilon decays with time.
     After some time the means should converge, and so epsilon greedy should stop exploring altogether
     
     There are different decay schemes, here 2 are implemented: 1/N or decay^N
     Note: 1/N tends to decay too quickly, user can therfore prolong the starting exploration
         by providing a starting point b/N
-    """
+    '''
     
     def __init__(self,b=None,decay=None):
-        """
+        '''
         User can specify b for epsilon(N)=b/N decay (b=1 for 1/N)
         OR
         decay for epsilon(N) = 1*decay**N
-        """
+        '''
         EpsilonGreedy.__init__(self,1)
         if (b is not None):
             self.b=b
@@ -138,13 +138,13 @@ class DecayingEpsilonGreedy(EpsilonGreedy):
         return string
 
 class OptimsiticInitialValue(BasicPlayer):
-    """
+    '''
     Optimistic initial value player assumes that all means are very high, then updates each iteration
     Initial value must overshoot, and with each update they become more and more realistic,
     until they converge close to the true mean
     In practice, the highest true mean will converge, and the other bandits
         will stop being explored with estimated means just below that
-    """
+    '''
     
     def __init__(self,optimistic_value):
         BasicPlayer.__init__(self)
@@ -164,7 +164,7 @@ class OptimsiticInitialValue(BasicPlayer):
         return 'OptimisticInitialValue:'+str(self.optimistic_value)
 
 class UCB(BasicPlayer):
-    """
+    '''
     Upper confidence bound player relies on the normal distribution of the samples, 
         and is greedy towards the means including confidence intervals, thus choosing the bandit
         whose higher bound is the highest. In time the mean converges, and the bounds shrink.
@@ -173,7 +173,7 @@ class UCB(BasicPlayer):
     Note: UCB is sensitive to variance, so the user can provide an estimate for the expected variance
         so that the confidence intervals will be adjusted
         
-    """
+    '''
     
     def __init__(self,variance=1):
         BasicPlayer.__init__(self)
@@ -194,7 +194,7 @@ class UCB(BasicPlayer):
             return string + ' variance: ' + str(self.variance)
 
 class ThompsonSampling(BasicPlayer):
-    """
+    '''
     Gaussian Thompson sampling - this algorithm generates a distribution for the predicted mean,
         randomly chooses a point from each distribution and uses this value greedily
         At the beginning, the distributions are broad, and the algorithm explores
@@ -204,7 +204,7 @@ class ThompsonSampling(BasicPlayer):
     Note: TS too is sensitive to variance, and user should provide an estimated variance
     
     This code was inspired by https://github.com/lazyprogrammer/machine_learning_examples/blob/master/rl/comparing_explore_exploit_methods.py
-    """
+    '''
 
     def __init__(self,variance=1):
         BasicPlayer.__init__(self)
@@ -226,7 +226,7 @@ class ThompsonSampling(BasicPlayer):
             return string + ' variance: ' + str(self.variance)
 
 class SelfRegulatingThompsonSampling(BasicPlayer):
-    """
+    '''
     This is an experimental derivative of ThompsonSampling that doesn't require any hyper-parameters
     
     It relies on the binary Thompson sampling (see below) and uses a beta distribution
@@ -237,7 +237,7 @@ class SelfRegulatingThompsonSampling(BasicPlayer):
         resulting in return to explore after many iterations
         
     I will come back to this issue and try to find a workaround sometime in the future (written Jan 2019)
-    """
+    '''
 
     def start(self,bandits):
         BasicPlayer.start(self,bandits)
@@ -266,12 +266,12 @@ class SelfRegulatingThompsonSampling(BasicPlayer):
         return 'SelfRegulatingThompsonSampling(Experimental)'
 
 class BinaryThompsonSampling(SelfRegulatingThompsonSampling):
-    """
+    '''
     Binary  Thompson sampling - same as ThompsonSampling but the input is 0 or 1
         and the distribution is beta instead of Gaussian
         
     As a minor generalization, the player will treat all positive outcomes as a win and all negative as a lose
-    """
+    '''
     
     def update(self,bandit,outcome):
         BasicPlayer.update(self,bandit,outcome)
