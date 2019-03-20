@@ -63,9 +63,7 @@ class SVM():
         self.weights = w
     
     def predict(self,X):
-        '''
-        Predict the labels on a given dataset
-        '''
+        '''Predict the labels on a given dataset'''
         # add 1 to X if needed (only check if one column is missing, and assume that it is the constants)
         if (X.shape[1]==len(self.weights)-1):
             X = np.concatenate((np.ones((len(X),1)),X),1)
@@ -79,9 +77,7 @@ class SVM():
         return pred
         
     def score(self,X,y):
-        '''
-        Return the score on the given test set
-        '''
+        '''Return the score on the given test set'''
         # same as LogisticRegressor
         try:
             return log_metrics.accuracy(y,self.predict(X))
