@@ -109,9 +109,7 @@ class TFIDF():
             return sort
     
     def get_important_list(self,no_of_words=1):
-        '''
-        Return the n most relevant words for each document in corpus
-        '''
+        '''Return the n most relevant words for each document in corpus'''
         relevant = []
         for doc in self.tf_idf:
             # for each document, find the highest TF-IDF values, descending
