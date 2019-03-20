@@ -133,4 +133,4 @@ def updated_weights(current,sample,rate):
     return current + delta * rate
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
