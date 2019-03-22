@@ -33,4 +33,4 @@ def cap(true_y,probabilities,perfect=False):
     return cap
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
