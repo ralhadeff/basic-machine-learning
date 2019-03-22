@@ -79,4 +79,4 @@ def d_max_pool(delta, data, step_size):
     return error
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
