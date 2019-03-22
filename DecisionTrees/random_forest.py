@@ -69,4 +69,4 @@ class RandomForest():
         return (y==pred).mean()
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")        
+    print('This module is not intended to run by iself')        
