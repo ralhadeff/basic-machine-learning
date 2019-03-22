@@ -50,3 +50,5 @@ class Eclat():
                     if (s>=min_group_size):
                         self.groups.append(group)
 
+if (__name__ == '__main__'):
+    print('This module is not intended to run by iself')
