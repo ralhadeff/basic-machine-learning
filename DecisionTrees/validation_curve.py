@@ -56,4 +56,4 @@ def validation_curve(estimator, X, y, params, cv_k=5, scoring=None, param_for_fi
     return curve      
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
