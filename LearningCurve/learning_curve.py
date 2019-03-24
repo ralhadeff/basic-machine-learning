@@ -34,4 +34,4 @@ def learning_curve(estimator,X_train,y_train,X_validation,y_validation,steps=1,f
     return learn
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
