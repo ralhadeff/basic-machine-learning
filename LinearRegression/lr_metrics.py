@@ -55,4 +55,4 @@ def adjusted_r_squared(X=None, real_y=None,predictions=None,r2=None,sample_size=
     return 1-(1-r)*(n-1)/(n-p-1)
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
