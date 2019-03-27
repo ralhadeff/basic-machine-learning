@@ -1,7 +1,7 @@
 '''
 Support vector machine implmentation (Pegasos version)
 '''
-# currently using only the 'linear kernel' and only binary classification
+#Using only the 'linear kernel' and only for binary classification. RBF is in a separate module.
 
 import numpy as np
 try:
