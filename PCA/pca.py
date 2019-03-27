@@ -1,6 +1,5 @@
 '''
 Principle component analysis, including linear algebra tools necessary to perform it
-
 Specifically: calculating covariance, the covariance matrix, eigenvectors and eigenvalues
 '''
 
@@ -144,8 +143,8 @@ def find_ortho(v, start=None):
     return u
 
 def eigen_value(M,v):
-    """ Provides the eigenvalue of a given matrix and a previously found eigenvector """
+    ''' Provides the eigenvalue of a given matrix and a previously found eigenvector '''
     return (np.matmul(M,v)/v).mean()
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
