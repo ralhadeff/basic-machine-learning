@@ -93,7 +93,7 @@ class SOM():
         
 def get_new_pairs(i,j,x,y):
     '''
-    Return a list of tuples of all the pairs that
+    Return a list of tuples for all the pairs that
         have not been already calculated for the current node
         i,j - current indices
         x,y - dimention of grid
