@@ -152,4 +152,4 @@ def dSoftmax(x):
     pass
     
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
