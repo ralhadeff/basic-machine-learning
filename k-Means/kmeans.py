@@ -11,19 +11,19 @@ class KMeans():
     '''
     
     def __init__(self, init='kmeans++'):
-        """
+        '''
         Construct a k-means clusterizer, using initialization function as specified
         kmeans++ is the default, otherwise 'random' can be specified
-        """
+        '''
         self.init = init
         self.centroids = None
     
     def fit(self,X,k):
-        """
+        '''
         Locates k clusters (centroids) in X
         using random initialization
         can also use kmeans++ if specified
-        """
+        '''
 
         if (self.init=='random'):
             # draw k starting points
