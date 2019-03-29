@@ -77,12 +77,12 @@ class KMeans():
             self.centroids = new_ks
     
     def predict(self,X,distances=False):
-        """
+        '''
         Label dataset X based on current centroids
         Should be used after fitting
         
         distances can be used to compute the distance to the closest cluster rather than the cluster index
-        """
+        '''
         if (distances):
             # distance and index. Index is necessary because the array will later be sorted
             y = np.zeros((X.shape[0],2),dtype=float)
@@ -104,9 +104,7 @@ class KMeans():
         return y
     
     def wcss(self,X):
-        """
-        Calculate within cluster sum of squares, also called intertia
-        """
+        '''Calculate within cluster sum of squares, also called intertia'''
         y = self.predict(X)
         wcss=0
         for x in range(len(X)):
@@ -114,10 +112,10 @@ class KMeans():
         return wcss
     
     def iterate(self,X,k,n):
-        """
+        '''
         Repeat the fitting process on for k cluster on X dataset n-times
             pick the fit with the lowest wcss
-        """
+        '''
         centroids = []
         wcss = []
         # run n fits
@@ -131,12 +129,12 @@ class KMeans():
         self.centroids = centroids[i]
 
 def elbow(X,kmeans,k_max,n=5):
-    """
+    '''
     Elbow method plot generator
     Calculates wcss for each clustering from 1 to k_max
     X is the data, kmeans is the estimator
     n is an optional argument for how many trials per k value should be attempted, to find the best clustering
-    """
+    '''
     x = []
     y = []
     # fit and calculate wcss (k_max included
@@ -148,4 +146,4 @@ def elbow(X,kmeans,k_max,n=5):
     return x,y
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
