@@ -1,14 +1,14 @@
-"""
+'''
 Implementation of k-means clustering, including kmeans++ centroid initialization
-"""
+'''
 
 import numpy as np
 
 class KMeans():
-    """
+    '''
     Implementation of k-means clustering
     Will find k clusters in the data based on Euclidean distance
-    """
+    '''
     
     def __init__(self, init='kmeans++'):
         """
