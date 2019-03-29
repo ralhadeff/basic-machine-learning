@@ -8,7 +8,7 @@ from tensorflow.distributions import Bernoulli
 
 class VariationalAutoencoder:
     
-    def __init__(self, n_input, n_list):
+    def __init__(self, n_input, n_list, ent_weight = 1, lr=0.001):
         '''
         number of input neurons and a list of the number of neurons in the encoder hidden layers
             The last number provided should be the number of latent features desired
@@ -24,6 +24,8 @@ class VariationalAutoencoder:
         self.encoder_layers = []
         # input layer
         previous = n_input
+        # in case there is only one hidden layer (for loop will be skipped)
+        current = n_input
         # current is the output of each layer (skip last because there is nothing after it)
         for current in n_list[:-1]:
             h = DenseLayer(previous,current)
@@ -101,9 +103,9 @@ class VariationalAutoencoder:
         kl = -tf.log(self.std) + 0.5*(self.std**2 + self.means**2) - 0.5
         kl = tf.reduce_sum(kl, axis=1)
         # ELBO
-        self.elbo = tf.reduce_sum(neg_cross_entropy - kl)
+        self.elbo = tf.reduce_sum(ent_weight * neg_cross_entropy - kl)
         
-        self.optimizer = tf.train.RMSPropOptimizer(learning_rate=0.001).minimize(-self.elbo)
+        self.optimizer = tf.train.RMSPropOptimizer(learning_rate=lr).minimize(-self.elbo)
                
         self.init = tf.global_variables_initializer()
         self.session = tf.Session()
