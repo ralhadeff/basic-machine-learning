@@ -1,27 +1,27 @@
-"""
+'''
 This module is a simple and inefficient implementation of the basic linear algebra required for machine learning tools
 It is designed for educational purposes only, and is by no means intended to be actually used (numpy is much better if you actually need to use linear algebra)
 The code was written by Raphael Alhadeff, Jan 2019, as part of my self-training in data science skills
 For simplicity, I will use lists for vectors, and then lists of vectors for matrices
 
 Note: more linear algebra tools specific for PCA are present in the pca.py file in the PCA folder
-"""
+'''
 
 import math
 from collections import Iterable
 
 class Vector(object):
-    """
+    '''
     This is a simple implementation of a vector
     constructor takes an arbitrary number of numbers, and converts them to floats
     elements are stored in a list
-    """  
+    '''  
     
     def __init__(self, *args):
-        """
+        '''
         *args takes an arbitrary number of numbers
         can include vectors, lists and tuples, and will create a vector list of all the collections in order
-        """
+        '''
         self.values = []
         if isinstance(args,Iterable):
             for i in args:
@@ -32,62 +32,46 @@ class Vector(object):
                     self.values.append(float(i))
     
     def present(self):
-        """
-        Print the vector's values
-        """
+        '''Print the vector's values'''
         print(self.values)
     
     def size(self):
-        """
-        Returns the vector's size in space
-        """
+        '''Returns the vector's size in space'''
         return math.sqrt(sum([x**2 for x in self.values]))
     
     def length(self):
-        """
-        Returns the number of elements in the vector
-        """
+        '''Returns the number of elements in the vector'''
         return len(self.values)
     
     def copy(self):
-        """
-        Returns a copy of the current vector
-        """
+        '''Returns a copy of the current vector'''
         return Vector(self.values)
     
     def add(self,vector):
-        """
-        Adds two vectors together, returns the sum (doesn't modify original vector)
-        """
+        '''Adds two vectors together, returns the sum (doesn't modify original vector)'''
         if (self.length()!=vector.length()):
             raise ValueError("Vectors must be of the same size to be added together")
         return Vector([x+y for (x,y) in zip(self.values,vector.values)])
     
     def multiply(self,scalar):
-        """
+        '''
         Multiplies all elements in a vector by scalar, returns the result (doesn't modify original vector)
-        """
+        '''
         return Vector([x*scalar for x in self.values])
     
     def dot(self,vector):
-        """
-        Returns the dot product of the two vectors
-        """
+        '''Returns the dot product of the two vectors'''
         if (self.length()!=vector.length()):
             raise ValueError("Vectors must be of the same size to be added together")
         return sum([x*y for (x,y) in zip(self.values,vector.values)])
     
     def normalize(self):
-        """
-        Returns a 1-unit size vector the is parallel to current vector
-        """
+        '''Returns a 1-unit size vector the is parallel to current vector'''
         l = self.size()
         return Vector([x/l for x in self.values])
     
     def orthogonal(self):
-        """
-        Returns the orthogonal vector
-        """
+        '''Returns the orthogonal vector'''
         # set all values to 1 except last one
         last = -1*sum(self.values[:-1])/self.values[-1]
         vector = [1 for i in range(self.length()-1)]
@@ -148,35 +132,29 @@ class Vector(object):
         return Vector([x/float(other) for x in self])
     
     def to_matrix(self):
-        """
-        Converts vector to a matrix with 1 row
-        """
+        '''Converts vector to a matrix with 1 row'''
         return Matrix(self)
     
     def transpose(self):
-        """
-        Converts vector to a matrix with 1 column = transpose
-        """
+        '''Converts vector to a matrix with 1 column = transpose'''
         trans = []
         for i in self:
             trans.append((i,))
         return Matrix(*trans)
     
     def delete(self, i):
-        """
-        Return vector with element i removed
-        """
+        '''Return vector with element i removed'''
         return Vector(self.values[:i]+self.values[i+1:])
 
 class Matrix(object):
-    """
+    '''
     This is a simple implementation of a matrix, using a list of Vectors from this same module
-    """   
+    '''   
    
     def __init__(self, *args):
-        """
+        '''
         *args can be a list of lists, tuples or Vectors
-        """
+        '''
         self.matrix = []
         # initinalize number of columns variable
         columns = len(args[0])
@@ -186,23 +164,16 @@ class Matrix(object):
             self.matrix.append(Vector(i))
         
     def present(self):
-        """
-        Print all the values of the matrix
-        """
+        '''Print all the values of the matrix'''
         for i in self.matrix:
             Vector(i).present()
             
     def shape(self):
-        """
-        Returns a tuple with the matrix's dimensions
-        """
+        '''Returns a tuple with the matrix's dimensions'''
         return (len(self.matrix),len(self.matrix[0]))
     
-    
     def transpose(self):
-        """
-        Returns the transposed matrix
-        """
+        '''Returns the transposed matrix'''
         trans = []
         for i in range(len(self.matrix[0])):
             trans.append([v[i] for v in self.matrix])
@@ -227,11 +198,11 @@ class Matrix(object):
         return Matrix(*m)
     
     def __add__(self,other):
-        """
+        '''
         Adds a scalar to all values of the matrix
         or adds a vector row-wise, vector must be of length equal to number of columns
         or adds a matrix element wise, matrix must have the same size
-        """
+        '''
         m = []
         if (isinstance(other,Matrix)):
             for i in range(self.shape()[0]):
@@ -252,10 +223,10 @@ class Matrix(object):
         return self+(-other)
     
     def __mul__(self,other):
-        """
+        '''
         Multiplies all elements by scalar
         or multiplies matrix by vector or matrix, where shapes have to be appropriate to linear algebra rules
-        """
+        '''
         # using methods to make code more readable
         if (isinstance(other,Matrix)):
             return self.by_matrix(other)
@@ -275,20 +246,20 @@ class Matrix(object):
         return Matrix(*m)
     
     def by_vector(self,other):
-        """
+        '''
         Multiplies matrix by vector
         vector lengths must match row vector's length
-        """
+        '''
         if (len(self.matrix[0])!=len(other)):
             raise ValueError("Dimensions don't match")
         else:
             return Vector([v*other for v in self])
     
     def by_matrix(self,other):
-        """
+        '''
         Multiplies two matrix
         the first matrix's column number must match the second matrix's row number
-        """
+        '''
         m = []
         for u in other.transpose():
             m.append(self*u)
@@ -298,9 +269,7 @@ class Matrix(object):
         return det(self)
     
     def minor(self, i,j):
-        """
-        Returns the minor of the matrix, remove row i and column j
-        """
+        '''Returns the minor of the matrix, remove row i and column j'''
         m = []
         for v in range(len(self.matrix)):
             if (v!=i):
@@ -313,9 +282,7 @@ class Matrix(object):
         return invert(self)
     
 def det(matrix):
-    """
-    Calculates the determinant of a matrix
-    """
+    '''Calculates the determinant of a matrix'''
     # no determinant for non square matrices
     if (not isinstance(matrix,Matrix) or len(matrix.matrix[0])!=len(matrix.matrix)):
         raise ValueError("Only square matrices have a determinant")
@@ -336,9 +303,7 @@ def det(matrix):
     return sum
 
 def cofactor(matrix):
-    """
-    Returns the co-factor matrix
-    """
+    '''Returns the co-factor matrix'''
     if (not isinstance(matrix,Matrix) or len(matrix.matrix[0])!=len(matrix.matrix) or len(matrix[0])<2):
         raise ValueError("Only square matrices of at least 2x2 elements have a co-factor matrix")
     size= len(matrix[0])
@@ -353,16 +318,12 @@ def cofactor(matrix):
     return Matrix(*m)
 
 def adjoint(matrix):
-    """
-    Returns the adjoint matrix
-    """
+    '''Returns the adjoint matrix'''
     return cofactor(matrix).transpose()
 
 def invert(matrix):
-    """
-    Returns the inverted matrix
-    """
+    '''Returns the inverted matrix'''
     return adjoint(matrix)/det(matrix)
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
