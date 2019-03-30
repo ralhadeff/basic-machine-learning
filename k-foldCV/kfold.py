@@ -1,15 +1,15 @@
-"""
+'''
 This tool allows the performance of k-fold cross-validation using any estimator and any score callable
-"""
+'''
 
 import numpy as np
 
 def k_fold_cv(estimator, X, y, k, fit_param=None, scoring=None):
-    """
+    '''
     Perform k-fold cross-validation on data X and y using estimator to fit
     User can provide fit parameters for the estimator using a dictionary
     Scoring is using the default estimator.score() function. Otherwise, the user can provide a callable
-    """
+    '''
     output = []
     # start from 0
     previous = 0
@@ -40,4 +40,4 @@ def k_fold_cv(estimator, X, y, k, fit_param=None, scoring=None):
     return np.asarray(output).mean()
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
