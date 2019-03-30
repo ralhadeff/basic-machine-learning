@@ -1,6 +1,6 @@
-"""
+'''
 k-nearest neighbors classifier, using Euclidean distances
-"""
+'''
 
 import numpy as np
 try:
@@ -9,9 +9,9 @@ except:
     pass
 
 class KNN():
-    """
+    '''
     k-nearest neighbors classifier, based on Euclidean distances
-    """
+    '''
     
     def __init__(self):
         self.X = None
@@ -20,16 +20,16 @@ class KNN():
         self.k = 5
     
     def fit(self,X,y):
-        """
+        '''
         No actual fitting is done for this lazy implementation, saves the data for later use
-        """
+        '''
         self.X = X
         self.y = y
     
     def predict(self,X,k):
-        """
+        '''
         Label X dataset using k neighbors
-        """
+        '''
         if (k%2==0):
             print("Note: KNN is not advised using an even number of neighbors")
         
@@ -49,10 +49,10 @@ class KNN():
         return y
     
     def score(self,X,y,k=None):
-        """
+        '''
         Return the score on the given test set
         using the last fitted k, or a newly given k
-        """
+        '''
         # set current k
         if (k==None):
             k = self.k
@@ -66,4 +66,4 @@ class KNN():
             return (y==pred).mean()        
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
