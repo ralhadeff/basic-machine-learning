@@ -1,20 +1,20 @@
-"""
+'''
 pandas DataFrame scaler that scales all numeric values and returns a scaled DataFrame
 returned DataFrame includes the untouched non-numeric values
-"""
+'''
 
 import pandas as pd
 import numpy as np
 import random
 
 def scale(df,scaler='standard',skip_boolean='True',skip_row=[]):
-    """
+    '''
     Scales all numeric data in dataframe
     default scaler is standard distribution
     other option for scaler is normalize (min=0 max=1)
     skip_boolean will skip all values that only have 0s and 1s from the scaling
     skip_row is a list of row names to skip
-    """
+    '''
     new_df = pd.DataFrame()
     
     for i in df:
@@ -39,4 +39,4 @@ def scale(df,scaler='standard',skip_boolean='True',skip_row=[]):
     return new_df
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
