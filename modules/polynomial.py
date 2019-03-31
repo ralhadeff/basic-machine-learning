@@ -1,18 +1,18 @@
-"""
+'''
 This tool takes a DataFrame or a numpy array and returns an expanded array with higher polynomial features
-"""
+'''
 
 import numpy as np
 import pandas as pd
 
 def add_polynimials(df,power=2,cross=2,skip_row=[]):
-    """
+    '''
     Adds polynomial features for all features in the provided input
     The order is: [all original features (power 1)][all features squared][all features **3]...[all features **n]
     where the order is maintained within each bracket
     power is same feature to the power, cross is cross multiplications between features
     if using cross, all cross multiplications will be added to the end
-    """
+    '''
     # build skip list
     mask = []
     if (len(skip_row)>0):
@@ -83,4 +83,4 @@ def add_polynimials(df,power=2,cross=2,skip_row=[]):
     return new_df
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
