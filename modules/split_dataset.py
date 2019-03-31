@@ -1,19 +1,19 @@
-"""
+'''
 This tool splits a dataset into training and test sets
     can also split into a third group: validation
     input seed can be provided for reproducibility
-"""
+'''
 
 import numpy as np
 import pandas as pd
 import random
 
 def split_dataset(X,y,test_ratio=0.33, validation_ratio=0,seed=42):
-    """
+    '''
     Randomly splits data into training set and test set. X and y can be dataframes or numpy arrays
     optional: splits the data 3 ways, including a validation set as well
     random seed can be provided for reproducibility
-    """
+    '''
     # set random seed
     random.seed(seed)
     
@@ -49,4 +49,4 @@ def split_dataset(X,y,test_ratio=0.33, validation_ratio=0,seed=42):
     return (X_train,y_train,X_test,y_test)
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
