@@ -1,15 +1,15 @@
-"""
+'''
 A simple scaler for pandas dataframes. Saves the fitted scaling factors, then can scale or unscale dataframes as needed
-"""
+'''
 
 import pandas as pd
 import numpy as np
 
 class Scaler(object):
-    """
+    '''
     Scaler that scales all numeric data in a dataframe
     Scaler is first fit to a dataset, then it can be applied to scale or unscale datat
-    """
+    '''
     
     def __init__(self):
         # factors for the scaling
@@ -18,13 +18,13 @@ class Scaler(object):
         self.factors = {}
         
     def fit(self,df,scaler='standard',skip_boolean='True',skip_row=[]):
-        """
+        '''
         Fits the scaling for all numeric data in dataframe
         default scaler is standard distribution
         other option for scaler is normalize (min=0 max=1)
         skip_boolean will skip all values that only have 0s and 1s from the scaling
         skip_row is a list of row names to skip
-        """
+        '''
         for i in df:
             # add default factor
             self.factors[i]=(0,0)
@@ -48,10 +48,10 @@ class Scaler(object):
                     self.factors[i]=(a,b)
         
     def scale(self,df):
-        """
+        '''
         Scales the dataframe based on the fitted factors
         returns a new dataframe
-        """
+        '''
         new_df = pd.DataFrame()
         
         for i in df:
@@ -64,10 +64,10 @@ class Scaler(object):
         return new_df
     
     def unscale(self,df):
-        """
+        '''
         Unscales a dataframe based on the fitted factors (reverses the scaling)
         returns a new dataframe
-        """
+        '''
         new_df = pd.DataFrame()
         
         for i in df:
@@ -80,4 +80,4 @@ class Scaler(object):
         return new_df        
 
 if (__name__ == '__main__'):
-    print("This module is not intended to run by iself")
+    print('This module is not intended to run by iself')
