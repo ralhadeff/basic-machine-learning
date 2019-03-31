@@ -15,3 +15,6 @@ General tools that are in specific folders (other folder names are self-explanat
  * `modules` contains _linear algebra_, _scaling_ tools, a _polynomial features generator_, and a _data splitting_ tool
  * _Validation curve_ is in `DecisionTrees`
  * `MultiArmedBandit` contains _ε-greedy_, _decaying ε-greedy_, _optimsitic initial value_, _upper confidence bound_, and _Thompson sampling_ algorithms
+ 
+
+At some point, for some of the more advanced tools (VAE, GANs etc) I started using of-the-shelf implementations for the actual networks for speed and efficiency.
