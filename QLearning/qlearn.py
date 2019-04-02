@@ -41,7 +41,7 @@ class Qlearn():
         with torch.no_grad():
             state = torch.autograd.Variable(state)
         # multiply by temperature to make softmax output more extreme
-        p = torch.nn.functional.softmax(self.network(state*self.temperature),dim=0)
+        p = torch.nn.functional.softmax(self.network(state*self.temperature),dim=1)
         # draw randomly based on probabilities
         a = p.multinomial(1)
         # extract index from torch Variable
