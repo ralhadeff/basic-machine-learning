@@ -82,6 +82,7 @@ class GaussianMixtureClustering():
         _,p = self.iterate(X,len(self.priors),self.mus, self.sigmas, self.priors)
         return np.argmax(p,axis=1)
 
+# note - taken from AnomalyDetection
 def calculate_p(x,gaussian):
     '''
     Calculate the probability x belongs to a gaussian with mu and sigma parameters
@@ -92,3 +93,6 @@ def calculate_p(x,gaussian):
     det = np.linalg.det(sigma)
     return 1/((2*np.pi)**(n//2)*det)*np.exp(
         -((x-mu)[:,None].T @ np.linalg.inv(sigma) @ (x-mu)[:,None])/2) 
+
+if (__name__ == '__main__'):
+    print('This module is not intended to run by iself')
