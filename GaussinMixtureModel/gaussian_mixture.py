@@ -82,13 +82,12 @@ class GaussianMixtureClustering():
         _,p = self.iterate(X,len(self.priors),self.mus, self.sigmas, self.priors)
         return np.argmax(p,axis=1)
 
-# note - taken from AnomalyDetection
+# method modified from AnomalyDetection
 def calculate_p(x,gaussian):
     '''
     Calculate the probability x belongs to a gaussian with mu and sigma parameters
     '''
     mu,sigma = gaussian
-    # multivariate, meaning there is one multidimensional Gaussian for all features
     n = len(sigma)
     det = np.linalg.det(sigma)
     return 1/((2*np.pi)**(n//2)*det)*np.exp(
