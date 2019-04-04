@@ -1,0 +1,51 @@
+#:kivy 1.8.0
+
+<Game>
+
+    snake: snake_id
+    apple: apple_id
+
+    Snake:
+        id: snake_id
+        width: root.width/root.grid
+        height: root.height/root.grid
+
+    Apple:
+        id: apple_id
+        width: root.width/root.grid
+        height: root.height/root.grid
+
+    Label:
+        font_size: 30
+        color: 0,0,0,1
+        x: root.x + root.width/root.grid
+        top: root.top
+        text: 'Score: '+str(root.score)
+
+    Label:
+        font_size: 30
+        color: 0,0,0,1
+        x: root.x + root.width/root.grid
+        top: root.top - root.height/root.grid
+        text: 'Games: ' + str(root.iteration)
+     
+    Label:
+        font_size: 30
+        color: 0,0,0,1
+        x: root.x + root.width/root.grid
+        top: root.top - 2*root.height/root.grid
+        text: 'Average: ' + str(root.average)
+
+<Snake>
+    head: snake_head_id
+    tail: snake_tail_id
+
+    SnakeHead:
+        id: snake_head_id
+        width: root.width
+        height: root.height
+
+    SnakeTail:
+        id: snake_tail_id
+        width: root.width
+        height: root.height
