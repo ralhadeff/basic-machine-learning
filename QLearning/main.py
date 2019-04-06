@@ -13,9 +13,9 @@ import numpy as np
 from qlearn import Qlearn
 
 # snake starting size
-snake_size = 4
+snake_size = 2
 # game speed
-fps = 80
+fps = 1
 # default paint color
 color = (0,0,0)
 
@@ -38,6 +38,7 @@ class Game(Widget):
     iteration = NumericProperty(0)
     average = NumericProperty(0)
     total = 0
+    b = True
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -46,7 +47,8 @@ class Game(Widget):
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
         # trick to overcome initial sizing problem
         self.turn_count = 2
-        self.brain = Qlearn([54,64,3],10000,0.9,3)
+        self.brain = Qlearn([3,16,3],100000,0.9,5)
+        self.fps = fps
 
     def start(self):
         # draw border
@@ -61,7 +63,7 @@ class Game(Widget):
         self.update()
     
     def reset(self):
-        # reset score, increase game count
+        # reset score, increase game countx
         self.score = 0
         if (self.iteration>0):
             self.average = round(self.total/self.iteration,2)
@@ -112,28 +114,26 @@ class Game(Widget):
             self.reset()
             self.turn_count-=1
             self.reward = 0
+            self.last_action=0
             return
         else:
             state = self.get_state()
             # reward from previous action, after the action
-            action = self.brain.update(self.reward,state)
-            self.play_action(action)
-            if (self.reward<0):
-                self.reward=0
-            # snake is facing apple
-            if self.right_direction():
-                self.reward+= 2
-            else:
-                self.reward+= 1
-            # move snake
+            if (self.b):
+                print(self.reward,state,self.last_action)
+                action = self.brain.update(self.reward,state)
+                self.last_action = action
+                self.play_action(action)
+            # snake is alive
+            self.reward=0.1
             self.snake.move()
             # check defeat
             if self.check_defeat():
                 self.reset()
-                self.reward=-250
+                self.reward=-1
             # check eat
             if (self.snake.head.position == self.apple.pos):
-                self.reward+=25
+                self.reward=1
                 self.score+= 1
                 self.total+= 1
                 self.snake.eat()
@@ -168,66 +168,31 @@ class Game(Widget):
         t = self.snake.tail.positions
         a = self.apple.pos
 
-        state = np.zeros(54,dtype=int)
+        state = np.ones(3,dtype=int)
         
-        # head position
-        x,y = h
-        # radius
-        r = 2
-        gap = (r+1)**2
-        # counter
-        c = 0
-        for i in range(-2,2+1):
-            for j in range(-2,2+1):
-                if [x+i,y+j] in t:
-                    state[c]=1
-                    c+=1
-                if ([x+i,y+j]==a):
-                    state[c+gap]=1          
+        grid = self.grid
+        # safely checking will be done with checking arrays (for direction modifiers to head position)
+        c = []
+        # forward
+        c.append([(0,1),(-1,0),(0,-1),(1,0)])
+        # left
+        c.append([(-1,0),(0,-1),(1,0),(0,1)])
+        # right
+        c.append([(1,0),(0,1),(-1,0),(0,-1)])
+        # check and update signal
+        for i in range(3):
+            test = [h[0]+c[i][d][0],h[1]+c[i][d][1]]
+            if (test in t or test[0]*test[1]==0 or test[0]==grid or test[1]==grid):
+                state[i] = 0
         
-        # borders
-        if x<=2:
-            state[[0,5,10,15,20]]=1
-            if (x==1):
-                state[[1,6,11,16,21]]=1
-        if x>=self.grid-1:
-            state[[4,9,14,19,24]]=1 
-            if x==self.grid:
-                state[[3,8,13,18,23]]=1 
-        if y<=2:
-            state[[0,1,2,3,4]]=1
-            if y==1:
-                state[[5,6,7,8,9]]=1
-        if y>=self.grid-1:
-            state[[20,21,22,23,24]]=1 
-            if y==self.grid:
-                state[[15,16,17,18,19]]=1
+        x = np.sign(h[0]-a[0]) # x: +1 apple is to the left
+        y = np.sign(h[1]-a[1]) # y: +1 apple is down  
         
-        state[2*gap] = np.sign(h[0]-a[0])
-        state[2*gap+1] = np.sign(h[1]-a[1])
-        
-        if (d==0):
-            state[2*gap+2] = 1
-        elif (d==2):
-            state[2*gap+2] = -1
-        if (d==1):
-            state[2*gap+3] = 1
-        elif (d==3):
-            state[2*gap+3] = -1            
-       
         return state
     
     def show_state(self):
         s = self.get_state()
-        print('snake:')
-        print(s[[3,2,1]])
-        print([s[4],0,s[0]])
-        print(s[[5,6,7]])
-        i = 8
-        print('apple:')
-        print(s[[i+3,i+2,i+1]])
-        print([s[i+4],0,s[i+0]])
-        print(s[[i+5,i+6,i+7]])              
+        return s
 
     def play_action(self,a):
         # 0 left, 1 right, 2 nothing
@@ -242,9 +207,23 @@ class Game(Widget):
             self.snake.rotate(1)
         # testing
         if keycode[1] == 'q':
+            # print out current state vector
             print(self.show_state())
         if keycode[1] == 'e':
+            # manually run one game frame
             self.update()
+        if keycode[1] == 'z':
+            # enable/disable AI
+            self.b = not self.b
+        if keycode[1] == 'x':
+            # change game speed
+            Clock.unschedule(self.update)
+            self.fps = {1:6,6:50,50:1}[self.fps]
+            Clock.schedule_interval(self.update, 1.0/self.fps)
+        if keycode[1] == 'c':
+            # dump memory of brain
+            print(self.brain.memory)
+            
         return True
 
 class Apple(Widget): 
