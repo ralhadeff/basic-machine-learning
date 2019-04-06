@@ -1,1 +1,18 @@
-Work in progress
+# Q-learning
+
+### Reinforcement learning through a kivy snake game
+
+The game is a 2D board with a discretely moving snake (in black) that can face N/S/W/E - picking an apple (red circle) gives the snake points but makes it larger by one tail segment.  
+If the snake hits the border or one of its own tail segments it dies and the game restarts.  
+
+The game is learning using a simple DQN, being rewarded +1 for picking an apple, -1 for dying and +0.1 for surviving.  
+
+**In progress** I will add a youtube movie of the training process
+
+For testing purposes, the key bindings are:
+`a` and `d` - rotate left and right
+`q` - print state on screen
+`e` - run one frame
+`z` - disable AI, to play manually. Otherwise, the AI override the game completely.
+`x` - change game speed (1 fps, 10 fps, 50 fps)
+`c` - print entire memory of the network to the terminal
