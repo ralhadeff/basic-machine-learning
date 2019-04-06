@@ -13,7 +13,7 @@ import numpy as np
 from qlearn import Qlearn
 
 # snake starting size
-snake_size = 2
+snake_size = 4
 # game speed
 fps = 1
 # default paint color
@@ -47,7 +47,7 @@ class Game(Widget):
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
         # trick to overcome initial sizing problem
         self.turn_count = 2
-        self.brain = Qlearn([3,16,3],100000,0.9,5)
+        self.brain = Qlearn([8,64,3],100000,0.9,10,batch_size=100)
         self.fps = fps
 
     def start(self):
@@ -115,6 +115,7 @@ class Game(Widget):
             self.turn_count-=1
             self.reward = 0
             self.last_action=0
+            self.dead=False
             return
         else:
             state = self.get_state()
@@ -168,7 +169,7 @@ class Game(Widget):
         t = self.snake.tail.positions
         a = self.apple.pos
 
-        state = np.ones(3,dtype=int)
+        state = np.ones(8,dtype=int)
         
         grid = self.grid
         # safely checking will be done with checking arrays (for direction modifiers to head position)
@@ -185,8 +186,19 @@ class Game(Widget):
             if (test in t or test[0]*test[1]==0 or test[0]==grid or test[1]==grid):
                 state[i] = 0
         
-        x = np.sign(h[0]-a[0]) # x: +1 apple is to the left
-        y = np.sign(h[1]-a[1]) # y: +1 apple is down  
+        # is this a new game (meaning the snake has been killed)?
+        if (self.reward==-1):
+            state[3] = 0
+            
+        # did the snake eat any apples?
+        if (self.snake.tail.size>len(self.snake.tail.positions)):
+            state[4] = 1
+        else:
+            state[4] = 0
+        
+        state[5] = d
+        state[6] = h[0]-a[0]
+        state[7] = h[1]-a[1] 
         
         return state
     
