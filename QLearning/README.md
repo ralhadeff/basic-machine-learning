@@ -5,7 +5,7 @@
 The game is played on a 2D grid with a discretely-moving snake (in black) that can face N/S/W/E; picking an apple (red circle) gives the snake points but increases its length by one tail segment.  
 If the snake hits the edges or one of its own tail segments it dies and the game is lost (and a new game restarts).  
 
-The AI is learning to play using a simple DQN, being rewarded +1 for picking an apple, -1 for dying and +0.1 for surviving.  
+The AI is learning to play using a simple DQN, being rewarded ...<*to be updated*>.  
 
 **In progress** I will add a youtube movie of the training process
 
