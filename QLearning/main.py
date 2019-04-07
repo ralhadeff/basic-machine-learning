@@ -126,10 +126,7 @@ class Game(Widget):
                 self.last_action = action
                 self.play_action(action)
             # snake is alive
-            if (self.right_direction()):
-                self.reward=0.1
-            else:
-                self.reward=-0.1
+            self.reward=-0.1
             self.snake.move()
             # check defeat
             if self.check_defeat():
