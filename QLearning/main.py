@@ -18,6 +18,7 @@ snake_size = 4
 fps = 1
 # default paint color
 color = (0,0,0)
+neurons = 14
 
 class Game(Widget):
     
@@ -31,7 +32,7 @@ class Game(Widget):
     Window.size = (w, h)
     kivy.config.Config.set('graphics','resizable', False)
     # grid size (number of grid points in x and y)
-    grid = 12
+    grid = 8
     # score (apples eaten)
     score = NumericProperty(0)
     # iteration (game number played)
@@ -47,7 +48,7 @@ class Game(Widget):
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
         # trick to overcome initial sizing problem
         self.turn_count = 2
-        self.brain = Qlearn([8,64,3],100000,0.9,10,batch_size=100)
+        self.brain = Qlearn([neurons,64,4],100000,0.9,5,batch_size=100)
         self.fps = fps
 
     def start(self):
@@ -121,21 +122,23 @@ class Game(Widget):
             state = self.get_state()
             # reward from previous action, after the action
             if (self.b):
-                print(self.reward,state,self.last_action)
                 action = self.brain.update(self.reward,state)
                 self.last_action = action
                 self.play_action(action)
             # snake is alive
-            self.reward=0.1
+            if (self.right_direction()):
+                self.reward=0.1
+            else:
+                self.reward=-0.1
             self.snake.move()
             # check defeat
             if self.check_defeat():
                 self.reset()
-                self.reward=-1
+                self.reward=-10
             # check eat
             if (self.snake.head.position == self.apple.pos):
-                self.reward=1
                 self.score+= 1
+                self.reward=self.score*10
                 self.total+= 1
                 self.snake.eat()
                 self.apple.remove()
@@ -169,36 +172,34 @@ class Game(Widget):
         t = self.snake.tail.positions
         a = self.apple.pos
 
-        state = np.ones(8,dtype=int)
+        state = np.zeros(neurons,dtype=int)
         
         grid = self.grid
-        # safely checking will be done with checking arrays (for direction modifiers to head position)
-        c = []
-        # forward
-        c.append([(0,1),(-1,0),(0,-1),(1,0)])
-        # left
-        c.append([(-1,0),(0,-1),(1,0),(0,1)])
-        # right
-        c.append([(1,0),(0,1),(-1,0),(0,-1)])
-        # check and update signal
-        for i in range(3):
-            test = [h[0]+c[i][d][0],h[1]+c[i][d][1]]
-            if (test in t or test[0]*test[1]==0 or test[0]==grid or test[1]==grid):
-                state[i] = 0
+        
+        idx = 0
+        for x in range(-1,2):
+            for y in range(-1,2):
+                i = [h[0]+x,h[1]+y]
+                if (i in t or i[0]==1 or i[0]==grid or i[1]==1 or i[1]==grid):
+                    state[idx] = 1
+                idx+=1
         
         # is this a new game (meaning the snake has been killed)?
-        if (self.reward==-1):
-            state[3] = 0
+        if (self.reward<-0.2):
+            state[idx] = 1
             
-        # did the snake eat any apples?
+        # did the snake eat any apples recently?
         if (self.snake.tail.size>len(self.snake.tail.positions)):
-            state[4] = 1
+            state[idx+1] = 1
         else:
             state[4] = 0
         
-        state[5] = d
-        state[6] = h[0]-a[0]
-        state[7] = h[1]-a[1] 
+        state[idx+2] = d
+        state[idx+3] = h[0]-a[0]
+        state[idx+4] = h[1]-a[1] 
+        
+        # 4 is the head itself, can reuse
+        state[4] = self.score
         
         return state
     
@@ -207,9 +208,7 @@ class Game(Widget):
         return s
 
     def play_action(self,a):
-        # 0 left, 1 right, 2 nothing
-        if (a<2):
-            self.snake.rotate(a)
+        self.snake.head.direction = a
     
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
         # rotate left or right
