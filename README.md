@@ -6,7 +6,6 @@
 This repository includes all my machine learning implementations in python. The purpose of this implementation is for my own training, and does not aim at being fast; i.e. although some sections in the code could be improved for efficiency (e.g. more vectorization) one of my goals here was to make the code more instructive for a human reading it.
 
 For the first few estimators (Linear and Logistic) I wrote a full support to `pandas` `DataFrames` and `Series`. I did not always implement this because there was no more new code to write and learn from by continuing this support. Generally speaking, using `DataFrame.values` or `Series.values` should work for all numerical data.  
-  
 
 General tools that are in specific folders (other folder names are self-explanatory):
  * _Regularization_ is in `LinearRegression` (and has not be implemented in the `LogisticRegression`)
