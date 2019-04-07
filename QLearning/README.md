@@ -1,8 +1,8 @@
 # Q-learning
 
-### Reinforcement learning through a kivy snake game
+### Reinforcement learning through a Kivy snake game
 
-The game is a 2D board with a discretely moving snake (in black) that can face N/S/W/E - picking an apple (red circle) gives the snake points but makes it larger by one tail segment.  
+The game is played on a 2D griz with a discretely-moving snake (in black) that can face N/S/W/E; picking an apple (red circle) gives the snake points but increases its length by one tail segment.  
 If the snake hits the border or one of its own tail segments it dies and the game restarts.  
 
 The game is learning using a simple DQN, being rewarded +1 for picking an apple, -1 for dying and +0.1 for surviving.  
