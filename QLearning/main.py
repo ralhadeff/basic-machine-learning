@@ -13,12 +13,12 @@ import numpy as np
 from qlearn import Qlearn
 
 # snake starting size
-snake_size = 4
+snake_size = 1
 # game speed
 fps = 1
 # default paint color
 color = (0,0,0)
-neurons = 14
+neurons = 10
 
 class Game(Widget):
     
@@ -32,7 +32,7 @@ class Game(Widget):
     Window.size = (w, h)
     kivy.config.Config.set('graphics','resizable', False)
     # grid size (number of grid points in x and y)
-    grid = 8
+    grid = 6
     # score (apples eaten)
     score = NumericProperty(0)
     # iteration (game number played)
@@ -48,7 +48,7 @@ class Game(Widget):
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
         # trick to overcome initial sizing problem
         self.turn_count = 2
-        self.brain = Qlearn([neurons,64,4],100000,0.9,5,batch_size=100)
+        self.brain = Qlearn([neurons,32,32,4],100000,0.9,5,batch_size=100)
         self.fps = fps
 
     def start(self):
@@ -131,11 +131,11 @@ class Game(Widget):
             # check defeat
             if self.check_defeat():
                 self.reset()
-                self.reward=-10
+                self.reward=-1
             # check eat
             if (self.snake.head.position == self.apple.pos):
                 self.score+= 1
-                self.reward=self.score*10
+                self.reward=self.score*100
                 self.total+= 1
                 self.snake.eat()
                 self.apple.remove()
@@ -173,31 +173,39 @@ class Game(Widget):
         
         grid = self.grid
         
-        idx = 0
-        for x in range(-1,2):
-            for y in range(-1,2):
-                i = [h[0]+x,h[1]+y]
-                if (i in t or i[0]==1 or i[0]==grid or i[1]==1 or i[1]==grid):
-                    state[idx] = 1
-                idx+=1
-        
-        # is this a new game (meaning the snake has been killed)?
-        if (self.reward<-0.2):
-            state[idx] = 1
-            
-        # did the snake eat any apples recently?
-        if (self.snake.tail.size>len(self.snake.tail.positions)):
-            state[idx+1] = 1
+        # direction
+        state[0] = [1,0,-1,0][d]
+        state[1] = [0,1,0,-1][d]
+        # relative position of apple
+        if (self.reward>0):
+            pass
         else:
-            state[4] = 0
+            state[2] = h[0]-a[0]
+            state[3] = h[1]-a[1] 
         
-        state[idx+2] = d
-        state[idx+3] = h[0]-a[0]
-        state[idx+4] = h[1]-a[1] 
-        
-        # 4 is the head itself, can reuse
         state[4] = self.score
         
+        state[5] = len(self.snake.tail.positions)
+
+        delta = [(1,0),(0,1),(-1,0),(0,-1)]
+
+        # up
+        i = [h[0],h[1]+1]
+        if (i in t or i[1]==grid+1):
+            state[6] = 1
+        # left
+        i = [h[0]-1,h[1]]
+        if (i in t or i[0]==0):
+            state[7] = 1
+        # down
+        i = [h[0],h[1]-1]
+        if (i in t or i[1]==0):
+            state[8] = 1
+        # right
+        i = [h[0]+1,h[1]]
+        if (i in t or i[0]==grid+1):
+            state[9] = 1
+
         return state
     
     def show_state(self):
