@@ -1,5 +1,7 @@
 # Q-learning
 
+work in progress
+
 ### Reinforcement learning through a Kivy snake game
 
 The game is played on a 2D grid with a discretely-moving snake (in black) that can face N/S/W/E; picking an apple (red circle) gives the snake points but increases its length by one tail segment.  
