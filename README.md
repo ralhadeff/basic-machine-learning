@@ -3,9 +3,9 @@
 
 *Written by Dr. Raphael Alhadeff, January-April 2019.*
 
-This repository includes all my machine learning implementations in python. The purpose of this implementation is for my own training, and does not aim at being fast; i.e. although some sections in the code could be improved for efficiency (e.g. more vectorization) one of my goals here was to make the code more instructive for a human reading it.
+This repository includes all my machine learning implementations in python. The purpose of this implementation is for my own training, and does not aim at being fast; *i.e.* although some sections in the code could be improved for efficiency (*e.g.* more vectorization) one of my goals here was to make the code more instructive for a human reading it.
 
-For the first few estimators (Linear and Logistic) I wrote a full support to `pandas` `DataFrames` and `Series`. I did not always implement this because there was no more new code to write and learn from by continuing this support. Generally speaking, using `DataFrame.values` or `Series.values` should work for all numerical data.  
+For the first few estimators (_Linear_ and _Logistic_) I wrote a full support to `pandas`' `DataFrames` and `Series`. I did not implement this elsewhere because there was no more new code to write and learn from in continuing this support. Generally speaking, using `DataFrame.values` or `Series.values` should work for all numerical data.  
 
 General tools that are in specific folders (other folder names are self-explanatory):
  * _Regularization_ is in `LinearRegression` (and has not be implemented in the `LogisticRegression`)
@@ -16,4 +16,4 @@ General tools that are in specific folders (other folder names are self-explanat
  * `MultiArmedBandit` contains _ε-greedy_, _decaying ε-greedy_, _optimsitic initial value_, _upper confidence bound_, and _Thompson sampling_ algorithms
  
 
-At some point, for some of the more advanced tools (VAE, GANs etc) I started using of-the-shelf implementations for the back-end networks for speed and efficiency.
+For some of the more advanced tools (*e.g.* VAE, GAN) I started using off-the-shelf implementations as the backend networks for higher speed and efficiency.
