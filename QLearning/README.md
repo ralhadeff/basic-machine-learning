@@ -1,6 +1,6 @@
 # Q-learning
 
-work in progress
+_work in progress_
 
 ### Reinforcement learning through a Kivy snake game
 
