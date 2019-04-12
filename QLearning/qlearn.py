@@ -34,6 +34,7 @@ class Qlearn():
         self.previous_state = torch.zeros([1,neurons[0]])
         self.previous_action = 0
         self.previous_reward = 0
+        self.n_states = neurons[0]
         
     def get_action(self,state):
         '''Suggest an action to take given the current state'''
@@ -64,6 +65,18 @@ class Qlearn():
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
+    
+    def terminal_update(self,reward,state):
+        '''Update at the end of a session'''
+        # update the last turn
+        a = self.update(reward,state)
+        # last turn iterates back to itself
+        self.update(0,state)
+        # set previous to 0 for the next turn ('start fresh')
+        self.previous_state = torch.zeros([1,self.n_states])
+        self.previous_action = 0
+        self.previous_reward = 0
+        return a
     
     def update(self,reward,state):
         '''Update the model with a reward and a new state'''
