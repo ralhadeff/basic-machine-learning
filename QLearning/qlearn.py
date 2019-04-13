@@ -1,5 +1,5 @@
 '''
-Deep Q-learning model
+Deep Q-learning network
 '''
 
 import numpy as np
@@ -10,7 +10,7 @@ class Qlearn():
     
     def __init__(self, neurons, memory_size, gamma, temperature, batch_size=100, lr=0.001):
         '''
-        Q-learning model ('brain')
+        Q-learning network ('brain')
             User provides a list for the number of neurons (at least 3 elements for input, hidden and output)
             User also provides the memory size (number of events to remember)
             The gamma (decay) parameter
