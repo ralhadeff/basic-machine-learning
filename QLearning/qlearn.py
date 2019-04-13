@@ -32,7 +32,7 @@ class Qlearn():
         self.batch_size = batch_size
         # add one dimension for sample number
         self.previous_state = torch.zeros([1,neurons[0]])
-        self.previous_action = 0
+        self.previous_action = None
         self.previous_reward = 0
         self.n_states = neurons[0]
         
@@ -74,7 +74,7 @@ class Qlearn():
         self.update(0,state)
         # set previous to 0 for the next turn ('start fresh')
         self.previous_state = torch.zeros([1,self.n_states])
-        self.previous_action = 0
+        self.previous_action = None
         self.previous_reward = 0
         return a
     
@@ -82,11 +82,12 @@ class Qlearn():
         '''Update the model with a reward and a new state'''
         # convert what is needed into Tensors
         new_state = torch.Tensor(state).unsqueeze(0)
-        a = torch.LongTensor([self.previous_action])
-        r = torch.Tensor([self.previous_reward])
-        s = self.previous_state
-        # add transition memory
-        self.memory.append((s,new_state,r,a))
+        if (self.previous_action is not None):
+            a = torch.LongTensor([self.previous_action])
+            r = torch.Tensor([self.previous_reward])
+            s = self.previous_state
+            # add transition memory
+            self.memory.append((s,new_state,r,a))
         # select next action 
         action = self.get_action(new_state)
         # train network only if there are enough events to be used
