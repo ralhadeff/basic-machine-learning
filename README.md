@@ -16,4 +16,4 @@ General tools that are in specific folders (other folder names are self-explanat
  * `MultiArmedBandit` contains _ε-greedy_, _decaying ε-greedy_, _optimsitic initial value_, _upper confidence bound_, and _Thompson sampling_ algorithms
  
 
-For some of the more advanced tools (*e.g.* VAE, GAN) I started using off-the-shelf implementations as the backend networks for higher speed and efficiency.
+For some of the more advanced tools (*e.g.* _VAE_, _GAN_) I started using off-the-shelf implementations as the backend networks for higher speed and efficiency.
