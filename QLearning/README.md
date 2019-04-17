@@ -1,6 +1,6 @@
 # Q-learning
 
-_work in progress_ All this work is gradually being moved to `reinforcement_learning` folder
+_work in progress_ All this work is gradually being moved to `ReinforcementLearning` folder, and eventually this folder will be deleted.
 
 ### Reinforcement learning through a Kivy snake game
 
