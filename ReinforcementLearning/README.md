@@ -9,6 +9,7 @@ I will implement several approaches for RL, gradually increasing in complexicity
 * `X` - y.  
 
 
+![alt text](https://github.com/ralhadeff/machine-learning-tools/blob/master/ReinforcementLearning/animations/monte_carlo.gif "Logo Title Text 1")
   
     
       
