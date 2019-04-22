@@ -12,8 +12,10 @@ I will implement several approaches for RL, gradually increasing in complexicity
   
     
       
-<br> 
+<br>  
+
 **Note** - animated `gif`s were saved locally and then the `.ipynb` files were modified to properly read them in github.
+
 <br>
 
 **Moon landing** - experimental RL with moon landing game (inspired by [Beresheet](https://en.wikipedia.org/wiki/Beresheet))
