@@ -15,7 +15,7 @@ I will implement several approaches for RL, gradually increasing in complexicity
       
 <br>  
 
-**Note** - animated `gif`s were saved locally and then the `.ipynb` files were modified to properly read them in github.
+**Note** - animated `gif`s were saved locally and then the `.ipynb` files were modified to properly display them here.
 
 <br>
 
