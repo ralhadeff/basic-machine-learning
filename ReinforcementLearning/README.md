@@ -10,12 +10,9 @@ I will implement several approaches for RL, gradually increasing in complexicity
 
 * `sarsa` - TD(0) using the [SARSA](https://en.wikipedia.org/wiki/State%E2%80%93action%E2%80%93reward%E2%80%93state%E2%80%93action) algorithm, where the policy and Q values are updated 'online'
   
-    
-![alt text](https://github.com/ralhadeff/machine-learning-tools/blob/master/ReinforcementLearning/animations/monte_carlo.gif "RL example (Monte Carlo)")
-     
-<br>  
-**Note** - animated `gif`s were saved locally and then the `.ipynb` files were modified to properly display them here.
 
+<br>
+![alt text](https://github.com/ralhadeff/machine-learning-tools/blob/master/ReinforcementLearning/animations/monte_carlo.gif "RL example (Monte Carlo)")
 <br>
 
 **Moon landing** - experimental RL with moon landing game (inspired by [Beresheet](https://en.wikipedia.org/wiki/Beresheet))
