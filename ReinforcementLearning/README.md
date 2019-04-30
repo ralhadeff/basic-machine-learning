@@ -13,6 +13,8 @@ I will implement several approaches for RL, gradually increasing in complexicity
 ![alt text](https://github.com/ralhadeff/machine-learning-tools/blob/master/ReinforcementLearning/animations/monte_carlo.gif "RL example (Monte Carlo)")
 ---
 ### Function approximation methods:
+* `TBA` - 
+* `TBB` - 
 
 ---
 
