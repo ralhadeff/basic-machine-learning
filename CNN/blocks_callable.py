@@ -1,14 +1,9 @@
 
-# coding: utf-8
-
-# In[1]:
-
+'''
+A callcable version of the blocks (conforms with the keras functional API syntax)
+'''
 
 from keras.layers import Convolution2D, MaxPooling2D, Activation, add, concatenate
-
-
-# In[2]:
-
 
 class VGG_block():
     
@@ -66,4 +61,3 @@ class Inception_block():
         p = self.p[1](self.p[0](x))
         x = concatenate([x1,x3,x5,p],axis=-1)
         return x
-
