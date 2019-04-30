@@ -12,7 +12,8 @@ I will implement several approaches for RL, gradually increasing in complexicity
 * `q_learning` - TD(0) using Q-learning, where the policy and Q values are updated online but off-policy (meaning the policy used is not necessarily equal to the Q values used for updating the optimal policy). Note - in the ε-greedy case used here, this is almost identical to SARSA.  
 
 Samples:
-MC             |  Q-learning
+
+   MC                      |  Q-learning
 :-------------------------:|:-------------------------:
 ![](https://github.com/ralhadeff/machine-learning-tools/blob/master/ReinforcementLearning/animations/monte_carlo.gif "RL example (Monte Carlo)")  |  ![](https://github.com/ralhadeff/machine-learning-tools/blob/master/ReinforcementLearning/animations/q_learning.gif "RL example (Q-learning)")
 
