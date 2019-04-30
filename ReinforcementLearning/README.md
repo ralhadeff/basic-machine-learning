@@ -10,14 +10,14 @@ I will implement several approaches for RL, gradually increasing in complexicity
 * `monte_carlo` - the policy and Q values are updated after each play (Monte Carlo sampling) using an ε-greedy explore-exploit strategy (see [video](https://www.youtube.com/watch?v=l0sFUU7vScA) of results).   
 * `sarsa` - TD(0) using the [SARSA](https://en.wikipedia.org/wiki/State%E2%80%93action%E2%80%93reward%E2%80%93state%E2%80%93action) algorithm, where the policy and Q values are updated 'online'.   
 * `q_learning` - TD(0) using Q-learning, where the policy and Q values are updated online but off-policy (meaning the policy used is not necessarily equal to the Q values used for updating the optimal policy). Note - in the ε-greedy case used here, this is almost identical to SARSA.  
----
-### Function approximation methods:
-
 <br> 
 
 ![alt text](https://github.com/ralhadeff/machine-learning-tools/blob/master/ReinforcementLearning/animations/monte_carlo.gif "RL example (Monte Carlo)")
 <br>
 
+
+---
+### Function approximation methods:
 
 ---
 
