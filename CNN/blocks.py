@@ -48,7 +48,7 @@ def inception(X,kernels_1, k_3_in, kernels_3, k_5_in, kernels_5, kernels_pool):
     x5 = Convolution2D(kernels_5,(5,5),padding='same',activation='relu')(x5)
     
     p = MaxPooling2D((3,3),strides=(1,1),padding='same')(x)
-    p = Convolution2D(kernels_pool, (1,1), padding='same', activation='relu')(pool)
+    p = Convolution2D(kernels_pool, (1,1), padding='same', activation='relu')(p)
     
     x = concatenate([x1,x3,x5,p],axis=-1)
     return x
