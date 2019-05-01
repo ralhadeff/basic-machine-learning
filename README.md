@@ -1,7 +1,7 @@
 # machine-learning-tools
 **A python implementation for machine learning tools**
 
-*Written by Dr. Raphael Alhadeff, January-April 2019.*
+*Written by Dr. Raphael Alhadeff, January-May 2019.*
 
 This repository includes all my machine learning implementations in python. The purpose of this implementation is for my own training, and does not aim at being fast; *i.e.* although some sections in the code could be improved for efficiency (*e.g.* more vectorization) one of my goals here was to make the code more instructive for a human reading it.
 
@@ -16,4 +16,4 @@ General tools that are in specific folders (other folder names are self-explanat
  * `MultiArmedBandit` contains _ε-greedy_, _decaying ε-greedy_, _optimsitic initial value_, _upper confidence bound_, and _Thompson sampling_ algorithms
  
 
-For some of the more advanced tools (*e.g.* _VAE_, _GAN_) I started using off-the-shelf implementations as the backend networks for higher speed and efficiency.
+For some of the more advanced tools (*e.g.* _VAE_, _GAN_) I started using off-the-shelf implementations for the backend networks for higher speed and efficiency.
