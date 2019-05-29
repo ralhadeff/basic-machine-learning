@@ -2,7 +2,7 @@
 
 ### DCGAN with Keras on MNIST dataset
 
-DCGAN and several improvement stategies are demonstrated for comparison and reference.
+DCGAN along with several improvement stategies are demonstrated for comparison and future reference.
 
 Work in progress
 
