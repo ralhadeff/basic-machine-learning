@@ -6,5 +6,7 @@ DCGAN and several improvement stategies are demonstrated for comparison and refe
 
 Work in progress
 
-* `DCGAN` - the standard DCGAN
-* `DCGAN_experience_replay` - trial with several different methods to improve GAN performance and convergence (_e.g._ experience replay, conditional GAN)
+* `DCGAN` - the standard DCGAN.
+* `DCGAN_experience_replay` - variation with experience replay; results appear similar.
+* `DCGAN_noise` - variation with random noise added to the images; results are inferior.
+* `DCGAN_conditional` - variation with labels provided during training; .
