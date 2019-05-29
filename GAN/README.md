@@ -2,6 +2,8 @@
 
 Using Keras and applied on the MNIST dataset
 
+Several improvement stategies were tested, and compared to the standard DCGAN.
+
 Work in progress
 
 * `DCGAN` - standard DCGAN
