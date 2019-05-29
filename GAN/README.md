@@ -4,9 +4,8 @@
 
 DCGAN along with several improvement stategies are demonstrated for comparison and future reference.
 
-Work in progress
 
 * `DCGAN` - the standard DCGAN.
 * `DCGAN_experience_replay` - variation with experience replay; results appear similar.
 * `DCGAN_noise` - variation with random noise added to the images; results are inferior.
-* `DCGAN_conditional` - variation with labels provided during training; .
+* `DCGAN_conditional` - variation with labels provided during training; **work in progress**.
