@@ -7,4 +7,4 @@ DCGAN and several improvement stategies are demonstrated for comparison and refe
 Work in progress
 
 * `DCGAN` - the standard DCGAN
-* `DCGAN_Experience_replay` - trial with several different methods to improve GAN performance and convergence (_e.g._ experience replay, conditional GAN)
+* `DCGAN_experience_replay` - trial with several different methods to improve GAN performance and convergence (_e.g._ experience replay, conditional GAN)
