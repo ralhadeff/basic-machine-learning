@@ -1,10 +1,10 @@
-### DCGAN
+# Generative adversarial network (GAN)
 
-Using Keras and applied on the MNIST dataset
+### DCGAN with Keras on MNIST dataset
 
-Several improvement stategies were tested, and compared to the standard DCGAN.
+DCGAN and several improvement stategies are demonstrated for comparison and reference.
 
 Work in progress
 
-* `DCGAN` - standard DCGAN
-* `GAN_improvement_varations` - trial with several different methods to improve GAN performance and convergence (_e.g._ experience replay, conditional GAN)
+* `DCGAN` - the standard DCGAN
+* `DCGAN_Experience_replay` - trial with several different methods to improve GAN performance and convergence (_e.g._ experience replay, conditional GAN)
